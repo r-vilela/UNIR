@@ -1,0 +1,3 @@
+[submodule "POO/POO-proj"]
+	path = POO/POO-proj
+	url = git@github.com:r-vilela/POO-proj.git
