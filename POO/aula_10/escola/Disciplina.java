@@ -34,7 +34,7 @@ public class Disciplina implements Relatorio{
 
 	public void exibirInformacoes() {
         try{
-            System.out.println("Nome do Professor: " + professor.getNome());
+            System.out.println("Nome do Professor: " + this.professor.getNome());
             System.out.println("Nome\tNota 1\tNota 2\tMédia\tConceito");
             for (Aluno aluno : notasAlunos.keySet()) {
                 double notas[] = notasAlunos.get(aluno);

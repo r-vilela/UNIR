@@ -65,7 +65,7 @@ public class Main {
         disciplina.adicionarNota(aluno, 7.0, 6.0);
         disciplina1.adicionarNota(aluno, 8.0, 7.5);
 
-        //disciplina1.exibirInformacoes();
+        disciplina1.exibirInformacoes();
         disciplina.exibirInformacoes();
 
 
