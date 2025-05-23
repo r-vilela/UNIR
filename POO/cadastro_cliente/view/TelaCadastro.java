@@ -163,7 +163,7 @@ public class TelaCadastro extends JFrame{
         // Table Model
         ArrayList<Client> clients = new ArrayList<>();
         ClientTableModel model = new ClientTableModel(clients);
-        model.addClient(new Client("Maria", "maria@unir.br", "Feminine", "1234-1234"));
+        model.addClient(new Client("Maria", "maria@unir.br", "1234-1234", "Feminine"));
 
         tbl = new JTable();
         tbl.setFont(new Font("Dialog", Font.PLAIN, 15));
@@ -175,10 +175,43 @@ public class TelaCadastro extends JFrame{
         saveBtn.setBounds(12, 12, 105, 42);
         actPnl.add(saveBtn);
 
+        saveBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0){
+                // Getting values from fields
+                String name = txtName.getText().toString();
+                String email = txtEmail.getText().toString();
+                String tel = txtTel.getText().toString();
+                String gen = rdbtnFem.isSelected() ? "Feminine" : "Masculine";
+
+                if(name.isEmpty() || email.isEmpty() || tel.isEmpty()){
+                    JOptionPane.showMessageDialog(TelaCadastro.this, "Fill all the parameters!",
+                            "Alert Message!", JOptionPane.WARNING_MESSAGE);
+                }else {
+                    Client client = new Client(name, email, tel, gen);
+                    model.addClient(client);
+                    JOptionPane.showMessageDialog(TelaCadastro.this, "Client added successfully!",
+                            "Save Client!", JOptionPane.INFORMATION_MESSAGE);
+                    txtName.setText("");
+                    txtEmail.setText("");
+                    txtTel.setText("");
+                    btnGrp.clearSelection();
+                };
+            }
+        });
+
         JButton delBtn = new JButton("Delete");
         delBtn.setFont(new Font("Dialog", Font.BOLD, 15));
         delBtn.setBounds(157, 12, 105, 42);
         actPnl.add(delBtn);
+
+        delBtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent arg0){
+                int line = tbl.getSelectedRow();
+                model.deleteClient(line);
+            }
+        });
 
         JButton srcBtn = new JButton("Search");
         srcBtn.setFont(new Font("Dialog", Font.BOLD, 15));
@@ -189,6 +222,17 @@ public class TelaCadastro extends JFrame{
         txtBuscar.setBounds(427, 12, 540, 42);
         actPnl.add(txtBuscar);
         txtBuscar.setColumns(10);
+
+        srcBtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent arg0){
+                String name = txtBuscar.getText().toString();
+                if(!name.isEmpty()){
+                    int index = model.searchClient(name);
+                    tbl.setRowSelectionInterval(index, index);
+                }
+            }
+        });
 
     }
 }
