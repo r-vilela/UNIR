@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
 
+import model.Product;
+import model.ProductTableModel;
+
+import java.util.ArrayList;
+
 public class CadastroProduto extends JFrame{
 
     private JPanel cnt;
@@ -154,7 +159,7 @@ public class CadastroProduto extends JFrame{
 
         // Table panel
         JPanel tblPnl = new JPanel();
-        tblPnl.setBounds(40, 360, 960, 180);
+        tblPnl.setBounds(40, 360, 960, 300);
         tblPnl.setForeground(new Color( 190, 190, 190));
         cnt.add(tblPnl);
         tblPnl.setLayout(null);
@@ -164,6 +169,20 @@ public class CadastroProduto extends JFrame{
         lblTbl.setBounds( 20, 20, 200, 20);
         lblTbl.setForeground(new Color(39, 200, 47));
         tblPnl.add(lblTbl);
+
+        JScrollPane tblScrollPnl = new JScrollPane();
+        tblScrollPnl.setBounds(12, 52, 940, 240);
+        tblPnl.add(tblScrollPnl);
+
+        // Table Model
+        ArrayList<Product> products = new ArrayList<>();
+        ProductTableModel model = new ProductTableModel(products);
+        model.addProduct(new Product("KitKit", "10012", "12.99", "Food"));
+
+        JTable tbl = new JTable();
+        tbl.setFont(new Font("Dialog", Font.BOLD, 15));
+        tbl.setModel(model);
+        tblScrollPnl.setViewportView(tbl);
 
     }
 
