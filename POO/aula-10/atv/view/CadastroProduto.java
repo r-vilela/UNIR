@@ -8,10 +8,17 @@ import model.Product;
 import model.ProductTableModel;
 
 import java.util.ArrayList;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CadastroProduto extends JFrame{
 
     private JPanel cnt;
+    private JTextField txtName;
+    private JTextField txtId;
+    private JTextField txtPrice;
+    private JTextField txtSearch;
+    private JTable tbl;
 
     public static void main(String[] args){
         EventQueue.invokeLater(new Runnable() {
@@ -88,24 +95,24 @@ public class CadastroProduto extends JFrame{
         lblProdName.setForeground(new Color( 15, 15, 15));
         pnl.add(lblProdName);
 
-        JTextField txtProdName= new JTextField();
-        txtProdName.setBounds(20, 80, 350, 25);
-        txtProdName.setBackground(new Color(240, 240, 240));
-        pnl.add(txtProdName);
-        txtProdName.setColumns(10);
+        txtName= new JTextField();
+        txtName.setBounds(20, 80, 350, 25);
+        txtName.setBackground(new Color(240, 240, 240));
+        pnl.add(txtName);
+        txtName.setColumns(10);
 
         // Product ID Label and Input
-        JLabel lblProdID = new JLabel("Product ID");
-        lblProdID.setFont(new Font("Dialog", Font.BOLD, 15));
-        lblProdID.setBounds(20, 120, 200, 20);
-        lblProdID.setForeground(new Color( 15, 15, 15));
-        pnl.add(lblProdID);
+        JLabel lblID = new JLabel("Product ID");
+        lblID.setFont(new Font("Dialog", Font.BOLD, 15));
+        lblID.setBounds(20, 120, 200, 20);
+        lblID.setForeground(new Color( 15, 15, 15));
+        pnl.add(lblID);
 
-        JTextField txtProdID = new JTextField();
-        txtProdID.setBounds(20, 140, 100, 25);
-        txtProdID.setBackground(new Color(240, 240, 240));
-        pnl.add(txtProdID);
-        txtProdID.setColumns(10);
+        txtId = new JTextField();
+        txtId.setBounds(20, 140, 100, 25);
+        txtId.setBackground(new Color(240, 240, 240));
+        pnl.add(txtId);
+        txtId.setColumns(10);
 
         // Product Price Label and Input
         JLabel lblProdPric = new JLabel("Price");
@@ -114,11 +121,11 @@ public class CadastroProduto extends JFrame{
         lblProdPric.setForeground(new Color( 15, 15, 15));
         pnl.add(lblProdPric);
 
-        JTextField txtProdPric = new JTextField();
-        txtProdPric.setBounds(269, 140, 100, 25);
-        txtProdPric.setBackground(new Color(240, 240, 240));
-        pnl.add(txtProdPric);
-        txtProdPric.setColumns(10);
+        txtPrice = new JTextField();
+        txtPrice.setBounds(269, 140, 100, 25);
+        txtPrice.setBackground(new Color(240, 240, 240));
+        pnl.add(txtPrice);
+        txtPrice.setColumns(10);
 
         // Product Category Radio
         JLabel lblCat = new JLabel("Category");
@@ -177,13 +184,79 @@ public class CadastroProduto extends JFrame{
         // Table Model
         ArrayList<Product> products = new ArrayList<>();
         ProductTableModel model = new ProductTableModel(products);
-        model.addProduct(new Product("KitKit", "10012", "12.99", "Food"));
+        model.addProduct(new Product("KitKat", "10012", "12.99", "Food"));
 
-        JTable tbl = new JTable();
+        tbl = new JTable();
         tbl.setFont(new Font("Dialog", Font.BOLD, 15));
         tbl.setModel(model);
         tblScrollPnl.setViewportView(tbl);
 
+        // Search Field
+        JLabel lblSearch = new JLabel("Search:");
+        lblSearch.setFont(new Font("Dialog", Font.BOLD, 17));
+        lblSearch.setBounds( 470, 18, 63, 20);
+        lblSearch.setForeground(new Color( 15, 15, 15));
+        tblPnl.add(lblSearch);
+
+        txtSearch = new JTextField();
+        txtSearch.setBounds(540, 14, 160, 25);
+        txtSearch.setBackground(new Color(240, 240, 240));
+        tblPnl.add(txtSearch);
+        txtSearch.setColumns(10);
+
+        // Search Button
+        JButton searchBtn = new JButton("Search");
+        searchBtn.setFont(new Font("Dialog", Font.BOLD, 15));
+        searchBtn.setBounds(710, 13, 100, 27);
+        searchBtn.setBackground(new Color(60, 180, 230));
+        searchBtn.setForeground(Color.white);
+        tblPnl.add(searchBtn);
+
+        // Delete Button
+        JButton deleteBtn = new JButton("Delete");
+        deleteBtn.setFont(new Font("Dialog", Font.BOLD, 15));
+        deleteBtn.setBounds(830, 13, 100, 27);
+        deleteBtn.setBackground(new Color(230, 70, 60));
+        deleteBtn.setForeground(Color.white);
+        tblPnl.add(deleteBtn);
+
+        // Buttons Actions
+        // Save Button Action
+        saveBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0){
+                String name = txtName.getText().toString();
+                String price = txtPrice.getText().toString();
+                String id = txtId.getText().toString();
+                String category = rdbtnCatFood.isSelected() ? "Food" : (rdbtnCatClean.isSelected() ? "Cleaning" : "Hygiene");
+
+                Product product = new Product(name, id, price, category);
+                model.addProduct(product);
+            }
+        });
+
+        // Delete Button
+        deleteBtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent arg0){
+                int line = tbl.getSelectedRow();
+                model.deleteProduct(line);
+            }
+        });
+
+        searchBtn.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent arg0){
+                String name = txtSearch.getText().toString();
+                if(!name.isEmpty()){
+                    int index = model.searchProduct(name);
+                    tbl.setRowSelectionInterval(index, index);
+                }
+            }
+        });
+
     }
+
+
 
 }

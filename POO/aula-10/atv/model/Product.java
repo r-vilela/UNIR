@@ -1,24 +1,24 @@
 package model;
 
 public class Product{
-    private String name;
     private String id;
+    private String name;
     private String price;
     private String category;
 
     public Product(String name, String id, String price, String category){
-        this.name = name;
         this.id = id;
+        this.name = name;
         this.price = price;
         this.category = category;
 
     }
 
-    public void setName(String name){
-        this.name = name;
-    }
     public void setId(String id){
         this.id = id;
+    }
+    public void setName(String name){
+        this.name = name;
     }
     public void setPrice(String price){
         this.price = price;
