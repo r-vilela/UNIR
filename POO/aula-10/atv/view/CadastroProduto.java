@@ -230,8 +230,18 @@ public class CadastroProduto extends JFrame{
                 String id = txtId.getText().toString();
                 String category = rdbtnCatFood.isSelected() ? "Food" : (rdbtnCatClean.isSelected() ? "Cleaning" : "Hygiene");
 
-                Product product = new Product(name, id, price, category);
-                model.addProduct(product);
+                if(name.isEmpty() || price.isEmpty() || id.isEmpty()){
+                    JOptionPane.showMessageDialog(CadastroProduto.this,
+                            "Fill all fields to add a product!",
+                            "Alert Message!", JOptionPane.WARNING_MESSAGE);
+                }else if(isNum(price) && isNum(id)){
+                    Product product = new Product(name, id, price, category);
+                    model.addProduct(product);
+                }else{
+                    JOptionPane.showMessageDialog(CadastroProduto.this,
+                            "Make that the id and price fields are numeric!",
+                            "Alert Message!", JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
 
@@ -251,10 +261,22 @@ public class CadastroProduto extends JFrame{
                 if(!name.isEmpty()){
                     int index = model.searchProduct(name);
                     tbl.setRowSelectionInterval(index, index);
+                }else{
+                    JOptionPane.showMessageDialog(CadastroProduto.this, "Search text field is empty",
+                            "Alert Message!", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
 
+    }
+
+    public static boolean isNum(String txt){
+        try{
+            Double.parseDouble(txt);
+            return true;
+        }catch(Exception err){
+            return false;
+        }
     }
 
 
