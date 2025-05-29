@@ -187,7 +187,7 @@ public class CadastroProduto extends JFrame{
         model.addProduct(new Product("KitKat", "10012", "12.99", "Food"));
 
         tbl = new JTable();
-        tbl.setFont(new Font("Dialog", Font.BOLD, 15));
+        tbl.setFont(new Font("Dialog", Font.PLAIN, 15));
         tbl.setModel(model);
         tblScrollPnl.setViewportView(tbl);
 
@@ -240,7 +240,7 @@ public class CadastroProduto extends JFrame{
                 }else{
                     JOptionPane.showMessageDialog(CadastroProduto.this,
                             "Make that the id and price fields are numeric!",
-                            "Alert Message!", JOptionPane.WARNING_MESSAGE);
+                            "Alert message!", JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
@@ -250,7 +250,14 @@ public class CadastroProduto extends JFrame{
             @Override
             public void actionPerformed(ActionEvent arg0){
                 int line = tbl.getSelectedRow();
-                model.deleteProduct(line);
+                if(line >= 0){
+                    model.deleteProduct(line);
+                }else{
+                    JOptionPane.showMessageDialog(CadastroProduto.this,
+                            "Select a line from the table!",
+                            "Alert message!", JOptionPane.WARNING_MESSAGE);
+
+                }
             }
         });
 
