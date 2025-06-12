@@ -1,13 +1,19 @@
-import java.util.Math;
+package model;
+
+import static java.lang.Math.*;
 
 public class TriangleRectangle implements GeometricForm{
     private final double base;
     private final double height;
 
-    public TriangleRectangle(double base, double height){
+    public TriangleRectangle(double base, double height) throws InvalidDimensionException{
         // Exception using InvalidDimensionException
-        this.base = base;
-        this.height = height;
+        if(base <= 0 || height <= 0){
+            throw new InvalidDimensionException("Base or Height values error!");
+        }else{
+            this.base = base;
+            this.height = height;
+        }
     };
 
     public double calculateArea(){
@@ -21,5 +27,15 @@ public class TriangleRectangle implements GeometricForm{
 
         return per;
     };
+
+    @Override
+    public String getDimensionDetails(){
+        return "Base: " + this.base + " Height: " + this.height;
+    };
+
+    @Override
+    public String getFormName(){
+        return "Triangle Rectangle";
+    }
 
 }
