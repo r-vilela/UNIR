@@ -6,7 +6,6 @@ public class Circle implements GeometricForm{
     private final double radius;
 
     public Circle(double radius) throws InvalidDimensionException{
-        // FAZER VERIFICACAO COM $ \le 0$
         if(radius <= 0){
             throw new InvalidDimensionException("Radius values error!");
         }else{
