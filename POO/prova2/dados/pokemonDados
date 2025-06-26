@@ -1,0 +1,10 @@
+Nome, Tipo, Ataque, Defesa, Qualidade, Avaliacao
+Ratata,Normal,3.0,3.0,Nenhuma,Otimo: Equilibrado
+Pichu,Eletrico,12.0,14.0,Agilidade,Ruim: Bateu morreu (muito lento)
+Pikachu,Eletrico,16.0,16.0,Agilidade,Bom: tem que dar mais dano
+Raichu,Eletrico,26.0,20.0,Agilidade,Otimo: Bateu correu
+Pidgey,Normal,14.0,11.0,Nenhuma,Bom: Eh para dar dano
+Spearow,Normal,7.0,9.0,Nenhuma,Bom: Eh para tankar
+Onix,Terra,18.0,26.0,Tanka mais,Otimo: Demorou mas ganhou
+Digglet,Terra,20.0,20.0,Tanka mais,Bom: tem que tankar mais
+Geodude,Terra,26.0,20.0,Tanka mais,Ruim: Deu dano e morreu
