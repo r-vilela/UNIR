@@ -3,7 +3,7 @@
 
 int main(){
 
-    // minute 35:05
+    // minute 1:06:49
 
     bool isOnline = true;
     bool isStudent = false;
