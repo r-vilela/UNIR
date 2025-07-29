@@ -1,26 +1,33 @@
 #include <stdio.h>
 #include <string.h>
 
+int isPalindromo(char str[20]){
+    int i;
+    for(i=0;i<strlen(str); i++){
+        if(!(str[i]-str[strlen(str)-i])){
+            return 0;
+        }
+    }
+    return 1;
+
+}
+
 int main(){
 
-    int i;
     char str[20] = "";
 
     printf("Eu reconheco qualquer palindromo!!\n");
     printf("Duvida?! Tente a sorte entao.\n");
 
-    printf("Digite palavra: ");
+    printf("Digite uma palavra: ");
     fgets(str, sizeof(str), stdin);
     str[strlen(str) - 1] = '\0';
 
-    for(i=0; i>strlen(str), i++){
-        if(i-(strlen(str)-1)){
-            printf("Nao eh um palindromo!\n");
-            break;
-        }
+
+    if(isPalindromo(str)){
+        printf("Eh um palindromo!\n");
+    }else{
+        printf("Nao eh um palindromo!\n");
     }
-
-    printf("Aqui esta a palavra %s", str);
-
     return 0;
 }
