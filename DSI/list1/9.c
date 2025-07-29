@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 int main(){
-    int matrix[3][3], i, j, total;
+    int matrix[3][3], i, j, total, aux;
 
     printf("Sei fazer a media aritmatica de uma matrix.\n\n");
     printf("Se duvida tente a sorte!\n\n");
@@ -15,14 +15,15 @@ int main(){
         }
     }
 
-    for(i=0;i<sizeof(matrix)/4;i++){
-        for(j=0;j<sizeof(matrix)/4;j++){
-            printf("%d", matrix[i][j]);
+
+    for(i=0, total=0;i<sizeof(matrix)/4/3;i++){
+        for(j=0;j<sizeof(matrix)/4/3;j++){
+            //printf("%d\n", matrix[i][j]);
             total+=matrix[i][j];
         }
     }
 
-    printf("A media aritmetica da matrix eh %d\n", total/sizeof(matrix)/4);
+    printf("A media aritmetica da matrix eh %d\n", total/(sizeof(matrix)/4));
 
     return 0;
 }
