@@ -30,7 +30,7 @@ int main(){
         printf("|");
         for(j=0;j<sizeof(matrixB)/4/4;j++){
             if(j==3){
-                printf("%d", matrixA[i][j]+matrixB[i][j]);
+                printf("%d\t", matrixA[i][j]+matrixB[i][j]);
             }
             printf("%d\t", matrixA[i][j]+matrixB[i][j]);
         }
