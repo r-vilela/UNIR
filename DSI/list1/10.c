@@ -5,8 +5,6 @@ int main(){
 
     printf("Digite os valores de 2 matrizes 4x4, que eu farei a soma delas!!\n\n");
 
-    printf("%d\n", sizeof(matrixA)/4/4);
-
     printf("Matrix A: \n");
     for(i=0;i<sizeof(matrixA)/4/4; i++){
         printf("\tInsira os valores da linha %d: \n", i+1);
