@@ -1,3 +1,6 @@
 [submodule "POO/POO-proj"]
 	path = POO/POO-proj
 	url = git@github.com:r-vilela/POO-proj.git
+[submodule "PROG2/SistameBancario"]
+	path = PROG2/SistameBancario
+	url = git@github.com:r-vilela/SistameBancario.git
