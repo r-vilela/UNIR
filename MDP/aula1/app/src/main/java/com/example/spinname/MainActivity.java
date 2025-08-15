@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         edt_listanomes = findViewById(R.id.edt_ListaNome);
         txt_resultado = findViewById(R.id.txt_resultado);
 
+        /*
         btn_sortear.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view){
@@ -43,10 +44,19 @@ public class MainActivity extends AppCompatActivity {
 
                     txt_resultado.setText("Resultado: " + nomes[num]);
                 };
-        }
-        );
 
 
+        });
+         */
 
+    }
+
+    public void clicar(View view){
+        String listaNomes = edt_listanomes.getText().toString();
+        String nomes[] = listaNomes.split(",");
+        Random random = new Random();
+        int num = random.nextInt(nomes.length);
+
+        txt_resultado.setText("Resultado: " + nomes[num]);
     }
 }
