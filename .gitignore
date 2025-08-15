@@ -1,2 +1,20 @@
 *.class
 
+
+MDP/*/*.iml
+MDP/*/.gradle
+MDP/*/local.properties
+MDP/*/.idea/caches
+MDP/*/.idea/libraries
+MDP/*/.idea/modules.xml
+MDP/*/.idea/workspace.xml
+MDP/*/.idea/navEditor.xml
+MDP/*/.idea/assetWizardSettings.xml
+MDP/*/.DS_Store
+MDP/*/build
+MDP/*/captures
+MDP/*/.externalNativeBuild
+MDP/*/.cxx
+MDP/*/local.properties
+MDP/*/.gitignore
+
