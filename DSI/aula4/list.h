@@ -33,6 +33,8 @@ int removeKey(lista *L, int key);
 
 int search(lista *L, int key);
 
+int binarySearch(lista *L, int key);
+
 int destroy(lista *L);
 
 void show(lista *L);

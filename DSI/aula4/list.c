@@ -91,7 +91,8 @@ int removeKey(lista *L, int key){
         return 0;
     }
 
-    for(i=0;i<L->nelem&&key!=L->A[i].key;i++);
+    for(i=0;i<L->nelem&&key!=L->A[i].key;i++){
+    };
 
     if(i==L->nelem){
         return 0;// nao achou
@@ -99,7 +100,7 @@ int removeKey(lista *L, int key){
 
     L->nelem--;
 
-    for(int i=0;i<L->nelem;i++){
+    for( ;i<L->nelem;i++){
         L->A[i] = L->A[i+1];
     }
 

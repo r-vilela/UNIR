@@ -21,6 +21,10 @@ int main(){
         printf("6-Esta vazio\n");
         printf("7-Esta cheia\n");
         printf("8-Remover inicio\n");
+        printf("9-Remover final\n");
+        printf("10-Remover chave\n");
+        printf("11-Pesquisa\n");
+        printf("12-Pesquisa Binaria(So com lista ordenados)\n");
         printf("0-Sair\n");
 
         printf("\nDigite a opcao: ");
@@ -77,11 +81,45 @@ int main(){
                 }
                 break;
             case 8:
-                if(insertSort(&list, V)){
+                if (removeStart(&list)){
                     printf("Removido com sucesso!\n");
                 }else{
                     printf("Nao foi possivel remover!\n");
                 }
+                break;
+            case 9:
+                if (removeEnd(&list)){
+                    printf("Removido com sucesso!\n");
+                }else{
+                    printf("Nao foi possivel remover!\n");
+                }
+                break;
+            case 10:
+                printf("Digite o valor a ser eliminado: ");
+                scanf("%d", &V.key);
+                if(removeKey(&list, V.key)){
+                    printf("Removido com sucesso!\n");
+                }else{
+                    printf("Nao foi possivel remover!\n");
+                }
+                break;
+            case 11:
+                printf("Digite o valor: ");
+                scanf("%d", &V.key);
+                if(search(&list, V.key)){
+                    printf("Valor encontrado na lista!\n");
+                }else{
+                    printf("Valor nao encontrado na lista!\n");
+                }
+            case 12:
+                    printf("Digite o valor: ");
+                    scanf("%d", &V.key);
+                    if(binarySearch(&list, V.key)){
+                        printf("Valor encontrado na lista!\n");
+                    }else{
+                        printf("Valor nao encontrado na lista!\n");
+                    }
+                    break;
                 break;
             default:
                 printf("Opcao invalida!\n");
