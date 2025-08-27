@@ -120,6 +120,48 @@ int copyUnique(list *L1, list *L2){
 };
 
 int copyInvert(list *L1, list *L2){
+    int i;
 
+    if(L1->nElem){
+        L2->nElem=L1->nElem;
+        for(i=0;i<L2->nElem;i++){
+            L2->A[i]=L1->A[(L2->nElem-1)-i];
+        }
+        return 1;
+    }
+    return 0;
+};
+
+int cmbSorted(list *L1,list *L2,list *L3){
+    int i, j;
+    if(isSorted(&(*L1))==1&&isSorted(&(*L2))==1){
+        for(i=0;i<L1->nElem; ){
+            for(j=0;j<L2->nElem; ){
+                if(L1->A[i].key>=L2->A[j].key){
+                    L3->A[i+j]=L2->A[j];
+                    j++;
+                }else{
+                    L3->A[i+j]=L1->A[i];
+                    i++;
+                }
+            }
+        }
+        L3->nElem=L1->nElem+L2->nElem;
+    }
+};
+
+int countList(list *L1, cntElem *ctn){
+    int i, aux;
+    if(L1->nElem){
+        for(i=0,aux=0;i<L1->nElem;i++){
+            if(L1->A[i].key!=ctn[aux]->elem.key){
+                aux=aux+1;
+                ctn[aux]->elem=L1->A[i];
+                ctn[aux]->count++;
+            }else{
+                ctn[aux]->count++;
+            }
+        }
+    }
 };
 

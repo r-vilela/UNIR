@@ -14,12 +14,13 @@ int isList(int list, int nList){
 
 int main(){
     list L[TM];
-    int opc=1, i, list, list2, list3, sorted, nList=0;
+    cntElem cnt[10];
+    int opc=1, i, nCnt, list, list2, list3, sorted, nList=0;
     typeElem elem;
     system("clear");
 
     do{
-        printf("------------------------------\n");
+        printf("-------------------------------------\n");
         printf("\tSequencial Static List\n\n");
         for(i=0;i<nList;i++){
             printf("%d - ", i);
@@ -31,7 +32,10 @@ int main(){
         printf("3-Remove Element from List\n");
         printf("4-Is the list sorted?\n");
         printf("5-Copy list\n");
-        printf("6-Copy unique values to list\n\n");
+        printf("6-Copy unique values to list\n");
+        printf("7-Invert list\n");
+        printf("8-Combined sorted lists\n");
+        printf("9-Count list\n\n");
 
         printf("Enter a value:");
         scanf("%d", &opc);
@@ -101,6 +105,8 @@ int main(){
                         }
                     }
 
+                }else{
+                    printf("List 1 is empty!\n");
                 }
                 break;
             case 6:
@@ -114,10 +120,50 @@ int main(){
                         if(copyUnique(&(L[list]), &(L[list2]))){
                             printf("Copied successfully!\n");
                         }else{
-                            printf("List 1 is empty!\n");
+                            printf("List 2 is empty!\n");
                         }
                     }
 
+                }else{
+                    printf("List 1 is empty!\n");
+                }
+                break;
+            case 7:
+                printf("Select a list to invert: ");
+                scanf("%d", &list);
+                if(isList(list,nList)){
+                    printf("Select a list to invert to: ");
+                    scanf("%d", &list2);
+                    system("clear");
+                    if(isList(list2,nList)){
+                        if(copyInvert(&(L[list]), &(L[list2]))){
+                            printf("List inverted successfully!\n");
+                        }else{
+                            printf("List 2 is empty!\n");
+                        }
+                    }
+                }else{
+                    printf("List 1 is empty!\n");
+                }
+                break;
+            case 8:
+                printf("Select a list to combine: ");
+                scanf("%d", &list);
+                if(isList(list,nList)){
+                    printf("Select a list to combine with: ");
+                    scanf("%d", &list2);
+                    if(isList(list2,nList)){
+                        printf("Select a list to paste the combined list: ");
+                        scanf("%d", &list3);
+                        system("clear");
+                        if(isList(list3,nList)){
+                            if(cmbSorted(&(L[list]), &(L[list2]),&(L[list3]))){
+                                printf("List combined successfully!\n");
+                            }else{
+                                printf("List 1 or 2 is empty!\n");
+                            }
+                        }
+                    }
                 }
                 break;
             case 0:

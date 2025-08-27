@@ -9,6 +9,11 @@ typedef struct{
     int nElem;
 }list;
 
+typedef struct{
+    typeElem elem;
+    int count;
+}cntElem;
+
 int create(list *L);
 
 int add(list *L, typeElem elem);
@@ -26,3 +31,7 @@ int find(list *L, typeElem elem);
 int copyUnique(list *L1, list *L2);
 
 int copyInvert(list *L1, list *L2);
+
+int cmbSorted(list *L1,list *L2,list *L3);
+
+int countList(list *L1, cntElem *ctn);
