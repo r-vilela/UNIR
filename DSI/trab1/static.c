@@ -141,8 +141,13 @@ int cmbSorted(list *L1,list *L2,list *L3){
                     L3->A[i+j]=L2->A[j];
                     j++;
                 }else{
-                    L3->A[i+j]=L1->A[i];
-                    i++;
+                    if(i<L1->nElem){
+                        L3->A[i+j]=L1->A[i];
+                        i++;
+                    }else{
+                        L3->A[i+j]=L2->A[j];
+                        j++;
+                    }
                 }
             }
         }
