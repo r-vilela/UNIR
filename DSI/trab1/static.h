@@ -34,4 +34,8 @@ int copyInvert(list *L1, list *L2);
 
 int cmbSorted(list *L1,list *L2,list *L3);
 
-int countList(list *L1, cntElem *ctn);
+int countList(list *L1, cntElem *cnt, int *nCnt);
+
+int showCount(cntElem *cnt, int nCnt);
+
+int binarySearch(list *L1, int key);

@@ -76,7 +76,7 @@ int isSorted(list *L){
         return ord;
 
     }else{
-        return 1;
+        return 0;
     }
 
 };
@@ -150,18 +150,54 @@ int cmbSorted(list *L1,list *L2,list *L3){
     }
 };
 
-int countList(list *L1, cntElem *ctn){
+int countList(list *L1, cntElem *cnt, int *nCnt){
     int i, aux;
     if(L1->nElem){
+        cnt[0].elem=L1->A[0];
+        cnt[0].count=0;
+        *nCnt=1;
         for(i=0,aux=0;i<L1->nElem;i++){
-            if(L1->A[i].key!=ctn[aux]->elem.key){
+            if(L1->A[i].key!=cnt[aux].elem.key){
                 aux=aux+1;
-                ctn[aux]->elem=L1->A[i];
-                ctn[aux]->count++;
+                cnt[aux].elem=L1->A[i];
+                cnt[aux].count=1;
+                (*nCnt) = (*nCnt)+1;
             }else{
-                ctn[aux]->count++;
+                cnt[aux].count++;
             }
         }
+        return 1;
     }
+    return 0;
 };
 
+int showCount(cntElem *cnt, int nCnt){
+    int i;
+    printf("\n|");
+    for(i=0;i<nCnt;i++){
+        printf(" Elem: %d Cnt: %d |", cnt[i].elem.key, cnt[i].count);
+    }
+    printf("\n");
+};
+
+int binarySearch(list *L1, int key){
+    int i, end=L1->nElem, mid, str=0;
+    if(L1->nElem){
+        if(isSorted(&(*L1))==1){
+            mid=(end+str)/2;
+            for( ;L1->A[mid].key!=key&&str<=end;mid=(end+str)/2){
+                if(L1->A[mid].key>key){
+                    end=mid-1;
+                }else{
+                    str=mid+1;
+                }
+            }
+            if(str>end){
+                return 10;
+            }
+            return mid+1;
+        }
+        return -1;
+    }
+    return 0;
+};

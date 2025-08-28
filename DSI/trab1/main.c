@@ -15,7 +15,7 @@ int isList(int list, int nList){
 int main(){
     list L[TM];
     cntElem cnt[10];
-    int opc=1, i, nCnt, list, list2, list3, sorted, nList=0;
+    int opc=1, i, nCnt=0, list, list2, list3, sorted, nList=0;
     typeElem elem;
     system("clear");
 
@@ -26,6 +26,13 @@ int main(){
             printf("%d - ", i);
             show(&(L[i]));
         }
+        printf("\n");
+
+        if(nCnt){
+            printf("List Count- \n");
+            showCount(cnt,nCnt);
+            printf("\n");
+        }
 
         printf("1-Create List\n");
         printf("2-Add Element to List\n");
@@ -35,7 +42,9 @@ int main(){
         printf("6-Copy unique values to list\n");
         printf("7-Invert list\n");
         printf("8-Combined sorted lists\n");
-        printf("9-Count list\n\n");
+        printf("9-Count list\n");
+        printf("10-Binary search\n");
+        printf("0-To exit the system\n\n");
 
         printf("Enter a value:");
         scanf("%d", &opc);
@@ -163,6 +172,38 @@ int main(){
                                 printf("List 1 or 2 is empty!\n");
                             }
                         }
+                    }
+                }
+                break;
+            case 9:
+                printf("Select a list count: ");
+                scanf("%d", &list);
+                system("clear");
+                if(isList(list,nList)){
+                    if(countList(&(L[list]),cnt, &nCnt)){
+                        printf("Count List made successfully!\n");
+                    }else{
+                        printf("List 1 is empty!\n");
+                    }
+                }
+                break;
+            case 10:
+                printf("Select a list: ");
+                scanf("%d", &list);
+                system("clear");
+                if(isList(list,nList)){
+                    printf("Enter the value to search: ");
+                    scanf("%d", &elem.key);
+
+                    i = binarySearch(&(L[list]), elem.key);
+                    if(i==10){
+                        printf("Value not found!\n");
+                    }else if(i==0){
+                        printf("Empty list!\n");
+                    }else if(i<0){
+                        printf("List not sorted!\n");
+                    }else{
+                        printf("Value found at %d!\n", i-1);
                     }
                 }
                 break;
