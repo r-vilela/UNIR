@@ -201,3 +201,17 @@ int binarySearch(list *L1, int key){
     }
     return 0;
 };
+
+int sentinelSearch(list *L1, typeElem elem){
+    L1->A[L1->nElem]=elem;
+    int i;
+    if(L1->nElem){
+        for(i=0;elem.key!=L1->A[i].key;i++);
+        if(i<L1->nElem){
+            return i;
+        }
+        return 0;
+    }
+    return -1;
+
+};

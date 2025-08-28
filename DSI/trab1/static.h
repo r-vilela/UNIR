@@ -5,7 +5,7 @@ typedef struct{
 }typeElem;
 
 typedef struct{
-    typeElem A[MAX];
+    typeElem A[MAX+1];
     int nElem;
 }list;
 
@@ -39,3 +39,5 @@ int countList(list *L1, cntElem *cnt, int *nCnt);
 int showCount(cntElem *cnt, int nCnt);
 
 int binarySearch(list *L1, int key);
+
+int sentinelSearch(list *L1, typeElem key);

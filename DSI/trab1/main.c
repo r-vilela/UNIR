@@ -44,6 +44,7 @@ int main(){
         printf("8-Combined sorted lists\n");
         printf("9-Count list\n");
         printf("10-Binary search\n");
+        printf("11-Sentinel search\n");
         printf("0-To exit the system\n\n");
 
         printf("Enter a value:");
@@ -204,6 +205,24 @@ int main(){
                         printf("List not sorted!\n");
                     }else{
                         printf("Value found at %d!\n", i-1);
+                    }
+                }
+                break;
+            case 11:
+                printf("Select a list: ");
+                scanf("%d", &list);
+                system("clear");
+                if(isList(list,nList)){
+                    printf("Enter the value to search: ");
+                    scanf("%d", &elem.key);
+
+                    i = sentinelSearch(&(L[list]), elem);
+                    if(i>0){
+                        printf("Value found at %d!\n", i);
+                    }else if(i<0){
+                        printf("Empty list!\n");
+                    }else{
+                        printf("Value not found!\n");
                     }
                 }
                 break;
