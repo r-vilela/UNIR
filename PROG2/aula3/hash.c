@@ -3,6 +3,26 @@
 
 #define TF 8
 
+/* Exercicio 1 - crie funcoes para hash para casa caso abaixo(Word):
+ * a) nome do funcionario
+ * b) CPF da pessoa
+ * c) Codigo de um produto(alfa-numerico)
+ * d) Registro academico de um aluno
+ *
+ * Exercicio 2
+ * COnsidere um cadastro de veiculos infratores que deve ser acessado
+ * para registrar dados e um novo veiculo ou consultar sobre uma ocorrencia
+ * Desenvolva um menu de opcoes e as funcoes correspondentespara cadastramento,
+ * tendo como chave a placa do veiculo.
+ *
+ * Implemente atraves do enderecamento aberto, utilizando o metodode divisao
+ * e tambem :
+ * Tentativa Linear,
+ * Tentatica Quadratica;
+ *
+ */
+
+
 typedef struct{
     char status;
     int chave;
