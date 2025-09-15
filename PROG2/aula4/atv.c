@@ -22,7 +22,6 @@ void criar(registro *p){
         p[i].infra=0;
 
     }
-    printf("Tabela criada!");
 }
 
 void exibir(registro *p){
@@ -34,9 +33,9 @@ void exibir(registro *p){
 }
 
 int hash(char *placa){
-    int total;
+    int total=0;
     for(int i=0;placa[i]!='\0';i++){
-        total += placa[i];
+        total += (int) placa[i];
     }
     return total%TF;
 }
@@ -46,6 +45,23 @@ void inserir(registro *p, char *placa, int dia, int mes, int ano, int infra, int
         //printf("pos = %d,tenta = %d,prox %d\n", pos, k, (pos+k)%TF);
         if(p[pos].status == 'O'){
             inserir(p, placa, dia, mes, ano, infra, (pos+k)%TF, k+1);
+        } else {
+            p[pos].status = 'O';
+            strcpy(p[pos].placa, placa);
+            p[pos].dia = dia;
+            p[pos].mes = mes;
+            p[pos].ano = ano;
+            p[pos].infra = infra;
+        }
+    }else{
+        printf("Nao foi possivel inserir");
+    }
+}
+
+void inserirLinear(registro *p, char *placa, int dia, int mes, int ano, int infra, int pos,int k){
+    if(k<=TF){
+        if(p[pos].status == 'O'){
+            inserir(p, placa, dia, mes, ano, infra, (pos+1)%TF, k++);
         } else {
             p[pos].status = 'O';
             strcpy(p[pos].placa, placa);
@@ -92,8 +108,9 @@ int main()
 
     do{
         printf("\n1-Exibir");
-        printf("\n2-Inserir");
+        printf("\n2-Inserir - Tentativa Quadratica");
         printf("\n3-Buscar");
+        printf("\n4-Inserir - Tentativa Linear");
         printf("\n0-Sair do programa");
 
         printf("\n\nEscreva sua opcao: ");
@@ -132,6 +149,27 @@ int main()
 
                 printf("Procurando infracoes . . .\n");
                 buscar(p, placa);
+                break;
+            case 4:
+                printf("Digite a placa: ");
+                getchar();
+                fgets(placa, sizeof(placa), stdin);
+
+                printf("Digite a data\n");
+
+                printf("Dia: ");
+                scanf("%d", &dia);
+
+                printf("Mes: ");
+                scanf("%d", &mes);
+
+                printf("Ano: ");
+                scanf("%d", &ano);
+
+                printf("Digita a infracao: \n");
+                scanf("%d", &infra);
+
+                inserirLinear(p, placa, dia, mes, ano, infra, hash(placa), 1);
                 break;
             case 0:
                 printf("Encerrando o programa....");
