@@ -23,7 +23,7 @@ int insertSort(list *L, tipoElem newElem){
 
     node *n;
     node *m;
-    for(n=(L->head), m=NULL;n->next!=NULL&&(n->next)->info.key<=newElem.key;m=n,n=n->next);
+    for(n=L->head, m=NULL;n!=NULL&&n->info.key<=newElem.key;m=n,n=n->next);
 
     if(m==NULL)
         return (insertStart(L, newElem));
@@ -105,7 +105,6 @@ int removeEndRec(list *L, node **n, node **m){
     if(n==NULL)
         return 0;
     if((*n)->next==NULL){
-        printf("Hello\n");
         if(m!=NULL){
             (*m)->next=NULL;
         }else{
@@ -124,12 +123,12 @@ int removeKey(list *L, int key){
     node *m;
     node *n;
 
-    for(m=NULL, n=L->head;n!=NULL&&p->info.key!=key;q=p,p=p->next);
+    for(m=NULL, n=L->head;n!=NULL&&n->info.key!=key;m=n,n=n->next);
 
     if(n==NULL)
         return 0;
 
-    if(q==NULL)
+    if(m==NULL)
         return (removeStart(L));
 
     m->next = n->next;
@@ -146,6 +145,7 @@ int binarySearch(list *L, int key);
 
 void destroy(list *L){
     destroyRec(&(L->head));
+    printf("Lista destroida!\n");
 };
 
 void destroyRec(node **n){
