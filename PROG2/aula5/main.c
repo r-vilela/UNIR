@@ -55,8 +55,7 @@ void show(pairTab *tab){
 void insert(pairTab *tab){
     char name[10];
     printf("Enter the new name:");
-    getchar();
-    fgets(name,sizeof(name), stdin);
+    scanf(" %[^\n]", name);
 
     node *new = (node *) malloc(sizeof(node));
     strcpy(new->name, name);
@@ -67,14 +66,13 @@ void insert(pairTab *tab){
         new->next = tab[ender].head;
         tab[ender].head = new;
     }
-    printf("Adicionado\n");
+    printf("\tAdded!\n\n");
 }
 
 void rmv(pairTab *tab){
     char name[10];
-    printf("Enter the new name:");
-    getchar();
-    fgets(name,sizeof(name), stdin);
+    printf("Enter a name to be removed:");
+    scanf(" %[^\n]", name);
 
     int ender = hash(name);
     node *cur = tab[ender].head;
@@ -86,12 +84,53 @@ void rmv(pairTab *tab){
     }
 
     if(cur==NULL){
-        printf("Not found\n");
+        printf("\tNot found\n\n");
     }else{
-        bef->next = cur->next;
+        if(bef==NULL){
+            tab[ender].head = cur->next;
+        }else{
+            bef->next = cur->next;
+        }
         free(cur);
+        printf("\tRemoved!\n\n");
     }
 }
+
+void search(pairTab *tab){
+    char name[10];
+    printf("Enter a name to be searched:");
+    scanf(" %[^\n]", name);
+
+    int ender = hash(name);
+    node *cur = tab[ender].head;
+
+    while(cur!=NULL&&strcmp(name, cur->name)!=0){
+        cur=cur->next;
+    }
+
+    if(cur==NULL){
+        printf("\tNot found\n\n");
+    }else{
+        printf("\tFound %s at letter %c\n\n", cur->name, tab[ender].letter);
+    }
+}
+
+void destroy(pairTab *tab){
+    node *n;
+    node *p;
+    for(int i=0;i<TF;i++){
+
+        if(tab[i].head!=NULL){
+            n = tab[i].head;
+            while(n!=NULL){
+                p = n;
+                n = n->next;
+                free(p);
+            }
+        }
+    }
+}
+
 
 void main(){
     pairTab tab[TF];
@@ -105,8 +144,9 @@ void main(){
         printf("2-Remove\n");
         printf("3-Search\n");
         printf("4-Show\n");
-        printf("0-Exit Program\n");
+        printf("0-Exit Program\n\n");
 
+        printf("Enter an option: ");
         scanf("%d", &opc);
 
         system("clear");
@@ -119,19 +159,20 @@ void main(){
                 rmv(tab);
                 break;
             case 3:
-                printf("Searching Name\n");
+                search(tab);
                 break;
             case 4:
                 show(tab);
                 break;
             case 0:
-                printf("Closing system!\n");
+                printf("Shutdown now!\n");
                 break;
             default:
                 printf("Invalid option!\n");
         }
     }while(opc!=0);
 
+    destroy(tab);
 
 }
 
