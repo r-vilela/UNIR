@@ -115,6 +115,26 @@ void search(pairTab *tab){
     }
 }
 
+void searchLetter(pairTab *tab){
+    char let[1];
+    printf("Enter a letter:");
+    scanf(" %[^\n]", let);
+
+    int ender = hash(let);
+    node *cur = tab[ender].head;
+
+    if(cur!=NULL){
+        printf("\tLetter %c found\n", let[0]);
+        while(cur!=NULL){
+            printf("\t\t- %s\n", cur->name);
+            cur=cur->next;
+        }
+    }else{
+        printf("Letter %c not found\n", let[0]);
+    }
+
+}
+
 void destroy(pairTab *tab){
     node *n;
     node *p;
@@ -143,7 +163,8 @@ void main(){
         printf("1-Add\n");
         printf("2-Remove\n");
         printf("3-Search\n");
-        printf("4-Show\n");
+        printf("4-Search Letter\n");
+        printf("5-Show\n");
         printf("0-Exit Program\n\n");
 
         printf("Enter an option: ");
@@ -162,6 +183,9 @@ void main(){
                 search(tab);
                 break;
             case 4:
+                searchLetter(tab);
+                break;
+            case 5:
                 show(tab);
                 break;
             case 0:
