@@ -264,10 +264,11 @@ int binarySearch(int inc, int fim, ind *tab, int cod){
     }
 }
 
-void searchMed(ind *indTab, int *tl){
+int searchMed(ind *indTab, int *tl){
     int cod, pos;
     if((*tl)==0){
         printf("Index Table is empty!\n\n");
+        return 0;
     }else{
         remedio rem;
         printf("Enter the code to be searched: ");
@@ -286,17 +287,20 @@ void searchMed(ind *indTab, int *tl){
                         pos, rem.cod, rem.desc, rem.price, rem.dosa);
             }
             fclose(arq);
+            return 1;
         }else{
-            printf("\tNot Found\n\n");
+            printf("\tMedicine not found\n\n");
+            return 0;
         }
     }
 }
 
-void searchCli(ind *indCliTab, int *tl){
+int searchCli(ind *indCliTab, int *tl){
     int cod, pos;
     cliente cli;
     if((*tl)==0){
         printf("Index Table is empty!\n\n");
+        return 0;
     }else{
         printf("Enter the client code to be searched: ");
         scanf("%d", &cod);
@@ -313,14 +317,19 @@ void searchCli(ind *indCliTab, int *tl){
                         pos, cli.cod, cli.name,cli.cpf,cli.celular);
             }
             fclose(arq);
+            return 1;
         }else{
-            printf("\nNot Found!\n\n");
+            printf("\nClient not found!\n\n");
+            return 0;
         }
     }
 }
 
 int addSale(ind *indCliTab, int tlCli, ind *indRemTab, int tlRem){
     venda sal;
+    float total;
+    remedio rem;
+    cliente cli;
     if(tlCli==0||tlRem==0){
         printf("Error with Index Tables!\n\n");
     }else{
@@ -332,38 +341,76 @@ int addSale(ind *indCliTab, int tlCli, ind *indRemTab, int tlRem){
         printf("\tEnter the date: ");
         scanf(" %[^\n]", &sal.date);
 
-        printf("\tEnter the Client Code: ");
-        scanf("%d", &sal.codCli);
-        if(binarySearch(0,tlCli,indCliTab, sal.codCli)<0){
-            printf("Error when client code!\n\n");
-            return 0;
-        }
-
-        printf("\tEnter the Medicine Code: ");
-        scanf("%d", &sal.codRem);
-        if(binarySearch(0,tlRem,indRemTab, sal.codRem)<0){
-            printf("Error when medicine code!\n\n");
-            return 0;
-        }
-
         do{
-            printf("\tEnter the quantity: ");
-            scanf("%d", &sal.qnt);
-            if(sal.qnt>0)
+            printf("\tEnter the Client Code: ");
+            scanf("%d", &sal.codCli);
+            int pos = binarySearch(0,tlCli-1, indCliTab,sal.codCli);
+            if(pos>=0){
+                FILE *arqCli = fopen("cliente.dat", "rb");
+                if(arqCli==NULL){
+                    printf("Error when reading file!\n\n");
+                    return 0;
+                }else{
+                    fseek(arqCli,(indCliTab[pos].posender)*sizeof(cliente),SEEK_SET);
+                    fread(&cli,sizeof(cliente),1,arqCli);
+                    printf("\t\tCode: %d\n\t\tName: %s\n\t\tCPF: %s\n\t\tTelephone: %s\n\n",
+                             cli.cod, cli.name,cli.cpf,cli.celular);
+                }
+                fclose(arqCli);
                 break;
-
-            printf("\tYou cannot enter a quantity below 1!\n\n");
+            }else{
+                printf("Client Code not available! Try again.\n");
+            }
         }while(1);
 
-        FILE *arq = fopen("vendas.bin", "ab");
+        do{
+            printf("\tEnter the Medicine Code: ");
+            scanf("%d", &sal.codRem);
 
-        if(arq==NULL){
-            FILE *arq = fopen("vendas.dat", "wb");
-        }
+            if(sal.codRem==0)
+                break;
 
-        fwrite(&sal,sizeof(venda),1,arq);
-        fclose(arq);
-        printf("Sale added successfully!\n\n");
+            int pos = binarySearch(0,tlRem-1,indRemTab, sal.codRem);
+
+            if(pos>=0){
+                FILE *arqRem = fopen("remedio.dat", "rb");
+                if(arqRem==NULL){
+                    printf("Error when reading file!\n\n");
+                    return 0;
+                }else{
+                    fseek(arqRem, (indRemTab[pos].posender)*sizeof(remedio),SEEK_SET);
+                    fread(&rem, sizeof(remedio),1,arqRem);
+                    printf("\t\tCode: %d \n\t\tDescription: %s \n\t\tPrice: R$%.2f \n\t\tDosage: %s\n\n",
+                            rem.cod, rem.desc, rem.price, rem.dosa);
+                }
+                fclose(arqRem);
+            }else{
+                printf("\nMedicine not found!\n\n");
+                continue;
+            }
+
+            do{
+                printf("\tEnter the quantity: ");
+                scanf("%d", &sal.qnt);
+                if(sal.qnt>0)
+                    break;
+
+                printf("\tYou cannot enter a quantity below 1!\n\n");
+            }while(1);
+            total+=rem.price*sal.qnt;
+
+            FILE *arq = fopen("vendas.bin", "ab");
+
+            if(arq==NULL){
+                FILE *arq = fopen("vendas.dat", "wb");
+            }
+
+            fwrite(&sal,sizeof(venda),1,arq);
+            printf("Sale added successfully!\n\n");
+            fclose(arq);
+        }while(1);
+        printf("The total cost from all medicines: R$%.2f\n", total);
+        printf("Ending sale!\n");
         return 1;
     }
 }
