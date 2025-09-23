@@ -20,6 +20,14 @@ typedef struct{
     int posender;
 }ind;
 
+typedef struct{
+    int note;
+    char date[11];
+    int codCli;
+    int codRem;
+    int qnt;
+}venda;
+
 void addRem(){
     remedio rem;
 
@@ -311,6 +319,74 @@ void searchCli(ind *indCliTab, int *tl){
     }
 }
 
+int addSale(ind *indCliTab, int tlCli, ind *indRemTab, int tlRem){
+    venda sal;
+    if(tlCli==0||tlRem==0){
+        printf("Error with Index Tables!\n\n");
+    }else{
+        printf("Enter sale informations:\n");
+
+        printf("\tEnter the receipt: ");
+        scanf("%d", &sal.note);
+
+        printf("\tEnter the date: ");
+        scanf(" %[^\n]", &sal.date);
+
+        printf("\tEnter the Client Code: ");
+        scanf("%d", &sal.codCli);
+        if(binarySearch(0,tlCli,indCliTab, sal.codCli)<0){
+            printf("Error when client code!\n\n");
+            return 0;
+        }
+
+        printf("\tEnter the Medicine Code: ");
+        scanf("%d", &sal.codRem);
+        if(binarySearch(0,tlRem,indRemTab, sal.codRem)<0){
+            printf("Error when medicine code!\n\n");
+            return 0;
+        }
+
+        do{
+            printf("\tEnter the quantity: ");
+            scanf("%d", &sal.qnt);
+            if(sal.qnt>0)
+                break;
+
+            printf("\tYou cannot enter a quantity below 1!\n\n");
+        }while(1);
+
+        FILE *arq = fopen("vendas.bin", "ab");
+
+        if(arq==NULL){
+            FILE *arq = fopen("vendas.dat", "wb");
+        }
+
+        fwrite(&sal,sizeof(venda),1,arq);
+        fclose(arq);
+        printf("Sale added successfully!\n\n");
+        return 1;
+    }
+}
+
+void showSale(){
+    venda sal;
+    int pos=0;
+    FILE *arq = fopen("vendas.bin","rb");
+    if(arq == NULL){
+        printf("Sale file doesn`t exist!\n\n");
+    }else{
+        printf("Reading Sales\n");
+        fread(&sal, sizeof(venda),1,arq);
+        while(!feof(arq)){
+            printf("\tPosition %d\n\t\tSale Receipt: %d\n\t\tDate: %s\n\t\tClient Code: %d\n\t\tMedicine Code: %d\n\t\tQuantity: %d\n",
+                    pos,sal.note,sal.date,sal.codCli,sal.codRem,sal.qnt);
+            pos++;
+            fread(&sal,sizeof(venda),1,arq);
+        }
+        fclose(arq);
+    }
+}
+
 int main(){
     int opc;
     ind indRemTab[20];
@@ -319,18 +395,20 @@ int main(){
     int tlCli=0;
 
     do{
-        printf("1-Add medicine\n");
-        printf("2-Add client\n");
-        printf("3-Show medicines\n");
-        printf("4-Show clients\n");
-        printf("5-Show medicines sorted\n");
-        printf("6-Show clients sorted\n");
-        printf("7-Create medicines index\n");
-        printf("8-Create clients index\n");
-        printf("9-Show medicines index\n");
-        printf("10-Show clients index\n");
-        printf("11-Search medicines\n");
-        printf("12-Search Clients\n");
+        printf("1-Add Medicine\n");
+        printf("2-Add Client\n");
+        printf("3-Add Sale\n");
+        printf("4-Show Medicines\n");
+        printf("5-Show Clients\n");
+        printf("6-Show Sales\n");
+        printf("7-Show medicines sorted\n");
+        printf("8-Show clients sorted\n");
+        printf("9-Create medicines index\n");
+        printf("10-Create clients index\n");
+        printf("11-Show medicines index\n");
+        printf("12-Show clients index\n");
+        printf("13-Search medicines\n");
+        printf("14-Search Clients\n");
         printf("0-Exit program\n");
 
         printf("\nEnter option: ");
@@ -346,33 +424,39 @@ int main(){
                 addCli();
                 break;
             case 3:
-                showRem();
+                addSale(indCliTab, tlCli, indRemTab, tlRem);
                 break;
             case 4:
-                showCli();
+                showRem();
                 break;
             case 5:
-                showSortRem(indRemTab, &tlRem);
+                showCli();
                 break;
             case 6:
-                showSortCli(indCliTab, &tlCli);
+                showSale();
                 break;
             case 7:
-                createIndRem(indRemTab, &tlRem);
+                showSortRem(indRemTab, &tlRem);
                 break;
             case 8:
-                createIndCli(indCliTab, &tlCli);
+                showSortCli(indCliTab, &tlCli);
                 break;
             case 9:
-                showInd(indRemTab, &tlRem);
+                createIndRem(indRemTab, &tlRem);
                 break;
             case 10:
-                showInd(indCliTab, &tlCli);
+                createIndCli(indCliTab, &tlCli);
                 break;
             case 11:
-                searchMed(indRemTab, &tlRem);
+                showInd(indRemTab, &tlRem);
                 break;
             case 12:
+                showInd(indCliTab, &tlCli);
+                break;
+            case 13:
+                searchMed(indRemTab, &tlRem);
+                break;
+            case 14:
                 searchCli(indCliTab, &tlCli);
                 break;
             case 0:
