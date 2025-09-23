@@ -1,5 +1,6 @@
 package com.example.pokeapp;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,43 +13,38 @@ import java.util.ArrayList;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
-    private ArrayList<Pokemon> pokemons;
+    private ArrayList<PokeType> pokes;
 
-    public Adapter(ArrayList<Pokemon> pokemons){
-        this.pokemons = pokemons;
+    public Adapter(ArrayList<PokeType> pokes){
+        this.pokes = pokes;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View itemList = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.layout_items,parent,false);
+        return new MyViewHolder(itemList);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
+        //holder.imgPokemon.setImageResource(this.pokemons.get(position).getImage());
+        System.out.println("Positio: "+position);
+        holder.txtName.setText(this.pokes.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return pokes.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{
-        private ImageView imgPokemon;
         private TextView txtName;
-        private TextView txtHeight;
-        private TextView txtWeight;
-        private TextView txtId;
 
         public MyViewHolder (View itemView){
             super(itemView);
-            imgPokemon = itemView.findViewById(R.id.imgPokemon);
             txtName = itemView.findViewById(R.id.txtName);
-            txtHeight = itemView.findViewById(R.id.txtHeight);
-            txtWeight = itemView.findViewById(R.id.txtWeight);
-            txtId = itemView.findViewById(R.id.txtId);
-
         }
 
     }
