@@ -1,18 +1,17 @@
 package com.example.pokeapp;
 
+import java.util.List;
+
 public class PokeType {
 
-    private String name;
-    private String url;
+    private PokeInfo pokemon;
+    private int slot;
 
-    public PokeType(String name, String url){
-        this.name = name;
-        this.url = url;
+    public PokeInfo getPokemon() {
+        return pokemon;
     }
 
-    public String getName() {
-        return name;
+    public int getSlot() {
+        return slot;
     }
-
-    public String getUrl(){return url;}
 }
