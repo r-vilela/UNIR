@@ -43,7 +43,6 @@ public class MainActivity2 extends AppCompatActivity {
         btnAPI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(url);
 
                 Intent intentAPI = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(intentAPI);

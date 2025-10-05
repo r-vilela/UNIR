@@ -8,5 +8,8 @@ import retrofit2.http.Path;
 
 public interface PokeApi {
     @GET("type/{type}/")
-    Call<PokeResponse> buscarTipoPokemon(@Path("type") String type);
+    Call<TypeResponse> buscarTipoPokemon(@Path("type") String type);
+
+    @GET("{id}")
+    Call<PokeResponse> buscarImage(@Path("id") String id);
 }

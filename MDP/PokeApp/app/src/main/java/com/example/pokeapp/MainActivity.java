@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
         this.adapter = new Adapter(this.pokes);
 
         this.recyclerView = findViewById(R.id.recyclerView);
-        //RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        //RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
@@ -105,10 +105,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void buscarTipoPokemon(String type){
         PokeApi pokeApi = retrofit.create(PokeApi.class);
-        Call<PokeResponse> call = pokeApi.buscarTipoPokemon(type);
-        call.enqueue(new Callback<PokeResponse>() {
+        Call<TypeResponse> call = pokeApi.buscarTipoPokemon(type);
+        call.enqueue(new Callback<TypeResponse>() {
             @Override
-            public void onResponse(Call<PokeResponse> call, Response<PokeResponse> response) {
+            public void onResponse(Call<TypeResponse> call, Response<TypeResponse> response) {
                 if(response.isSuccessful()){
                     List<PokeType> resultado = response.body().getPokemon();
                     pokes.clear();
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<PokeResponse> call, Throwable t) {
+            public void onFailure(Call<TypeResponse> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Erro ao buscar tipo de pokemon", Toast.LENGTH_SHORT).show();
             }
         });

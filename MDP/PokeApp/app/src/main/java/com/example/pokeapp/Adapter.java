@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
@@ -40,8 +42,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        //holder.imgPokemon.setImageResource(this.pokemons.get(position).getImage());
+        //holder.imgPokemon.setImageResource(this.pokes.get(position).getImage());
         holder.txtName.setText(this.pokes.get(position).getName());
+        this.pokes.get(position).setImage(img -> {
+            Glide.with(holder.itemView.getContext())
+                    .load(img)
+                    .into(holder.imgPokemon);
+        });
     }
 
     @Override
@@ -51,10 +58,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
     class MyViewHolder extends RecyclerView.ViewHolder{
         private TextView txtName;
+        private ImageView imgPokemon;
 
         public MyViewHolder (View itemView){
             super(itemView);
             txtName = itemView.findViewById(R.id.txtName);
+            imgPokemon = itemView.findViewById(R.id.imgPokemon);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
