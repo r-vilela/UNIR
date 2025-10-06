@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define TF 30
+#define TF 31
 
 typedef struct{
     char status;
@@ -45,13 +45,27 @@ int hash(char l){
     return (l%26);
 }
 
+void search(elem *ls, char *nome){
+    int pos = hash(nome[0]);
+
+    while(strcmp(ls[pos].nome, nome)&&pos!=-1){
+        pos = ls[pos].elo;
+    }
+
+    if(!strcmp(ls[pos].nome, nome)){
+        printf("\tPos: %d Status: %c Letra: %c Nome: %s Elo: %d\n",
+                pos, ls[pos].status, ls[pos].letra, ls[pos].nome, ls[pos].elo);
+    }else
+        printf("Nao encontrado!\n");
+}
+
 int add(elem *ls, char *nome){
     int pos = hash(nome[0]);
     int i;
 
     if(ls[pos].status!='O'){
-        strcpy(ls[pos].nome, nome);
         ls[pos].status = 'O';
+        strcpy(ls[pos].nome, nome);
         return 1;
     }else{
         for(i=26;i<TF;i++)
@@ -113,7 +127,8 @@ int main(){
         printf("1-Adicionar\n");
         printf("2-Exibir\n");
         printf("3-Exibir Nomes por letra\n");
-        printf("4-Remover\n");
+        printf("4-Procurar nome\n");
+        printf("5-Remover\n");
         printf("0-Sair\n");
 
         printf("\nEntre com a opcao: ");
@@ -138,6 +153,11 @@ int main(){
                 showLetter(list,letra);
                 break;
             case 4:
+                printf("Digite o nome a ser procurado: ");
+                scanf(" %[^\n]", nome);
+                search(list, nome);
+                break;
+            case 5:
                 printf("Digite o novo nome: ");
                 scanf(" %[^\n]", nome);
                 if(rmv(list,nome))
@@ -147,6 +167,7 @@ int main(){
                 break;
             case 0:
                 printf("Fechando sistema!\n");
+                break;
             default:
                 printf("Opcao invalida!\n");
         }
