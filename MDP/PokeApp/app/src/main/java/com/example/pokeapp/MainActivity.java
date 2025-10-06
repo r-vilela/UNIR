@@ -89,6 +89,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, MainActivity2.class);
                 intent.putExtra("name", pokes.get(position).getName());
                 intent.putExtra("url", pokes.get(position).getUrl());
+                intent.putExtra("id", pokes.get(position).getId());
+                intent.putExtra("weight", pokes.get(position).getWeight());
+                intent.putExtra("height", pokes.get(position).getHeight());
+                intent.putExtra("image", pokes.get(position).getImg());
                 startActivity(intent);
                 // Toast.makeText(MainActivity.this, pokes.get(position).getName(), Toast.LENGTH_SHORT).show();
             }

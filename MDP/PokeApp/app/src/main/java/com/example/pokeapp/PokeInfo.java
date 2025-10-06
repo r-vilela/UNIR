@@ -14,20 +14,33 @@ public class PokeInfo {
     private String name;
     private String url;
     private String img;
+    private String weight;
+    private String height;
+    private String id;
     private Retrofit retrofit;
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public String getHeight() {
+        return height;
+    }
+
+    public String getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
     }
 
     public void setImage(Consumer<String> callback) {
-        System.out.println("SetImage foi chamado");
         callback.accept("https://via.placeholder.com/150");
         retrofit = new Retrofit.Builder()
                 .baseUrl(this.url.substring(0,26))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
 
         PokeApi pokeApi = retrofit.create(PokeApi.class);
         Call<PokeResponse> call = pokeApi.buscarImage(this.url.substring(26));
@@ -35,6 +48,9 @@ public class PokeInfo {
             @Override
             public void onResponse(Call<PokeResponse> call, Response<PokeResponse> response) {
                 img = response.body().getSprites().getFront_default();
+                weight = response.body().getWeight();
+                id = response.body().getId();
+                height = response.body().getHeight();
                 callback.accept(img);
             }
 
