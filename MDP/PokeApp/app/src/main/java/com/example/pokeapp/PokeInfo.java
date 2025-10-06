@@ -19,6 +19,16 @@ public class PokeInfo {
     private String id;
     private Retrofit retrofit;
 
+    public PokeInfo(String name, String id, String url, String height, String weight, String img){
+        this.name = name;
+        this.url = url;
+        this.id = id;
+        this.height = height;
+        this.weight = weight;
+        this.img = img;
+
+    }
+
     public String getWeight() {
         return weight;
     }
