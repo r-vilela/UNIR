@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<PokeInfo> pokes;
     private Adapter adapter;
     private Retrofit retrofit;
+    private ImageButton favBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         });
         this.edtTipo = findViewById(R.id.edtTipo);
         this.btnPesquisar = findViewById(R.id.btnPesquisar);
+        this.favBtn = findViewById(R.id.favBtn);
         this.pokes = new ArrayList<>();
         this.adapter = new Adapter(this.pokes);
 
@@ -80,6 +83,14 @@ public class MainActivity extends AppCompatActivity {
                     //edtTipo.setText("");
                     buscarTipoPokemon(type);
                 }
+            }
+        });
+
+        favBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MainActivity3.class);
+                startActivity(intent);
             }
         });
 

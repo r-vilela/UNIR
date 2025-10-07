@@ -61,8 +61,6 @@ public class MainActivity2 extends AppCompatActivity {
         favoriteBtn = findViewById(R.id.favoriteBtn);
         preferences = getSharedPreferences(PREF_NOME, MODE_PRIVATE);
 
-
-
         Intent intent = getIntent();
         String namePoke = intent.getStringExtra("name");
         url = intent.getStringExtra("url");
@@ -74,10 +72,12 @@ public class MainActivity2 extends AppCompatActivity {
         Set<String> defValues = new HashSet<>();
         Set<String> favSet = preferences.getStringSet(PREF_KEY,defValues);
 
-        System.out.println(favSet);
-
-        if(favSet.contains(idPoke)){
-            favoriteBtn.setImageResource(R.drawable.heart);
+        Gson gson = new Gson();
+        for(String pokeStr : favSet){
+            PokeInfo poke = gson.fromJson(pokeStr, PokeInfo.class);
+            if(poke.getId().equals(idPoke)){
+                favoriteBtn.setImageResource(R.drawable.heart);
+            }
         }
 
         favoriteBtn.setOnClickListener(new View.OnClickListener() {
@@ -107,10 +107,8 @@ public class MainActivity2 extends AppCompatActivity {
         btnAPI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intentAPI = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(intentAPI);
-
             }
         });
 

@@ -93,4 +93,17 @@
             android:verticalScrollbarPosition="left" />
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/favBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#00FFFFFF"
+        android:scaleType="centerCrop"
+        android:tooltipText="Favorites Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/heart" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
