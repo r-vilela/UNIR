@@ -4,11 +4,14 @@
 
 int main(){
     list L1, L2, L3;
+    cnt_list C;
     create(&L1);
     create(&L2);
     create(&L3);
     int opc, sel1, sel2, sel3;
     elem v;
+
+    C.tam=0;
 
     list lst[] = {L1, L2, L3};
 
@@ -20,12 +23,19 @@ int main(){
                 printf("%d ", lst[i].A[j]);
             }
         }
+        printf("\nLista Contagem ");
+        for(int j=0;j<C.tam;j++){
+            printf("%d - %d |", C.C[j].chave, C.C[j].count);
+        }
         printf("\n1-Add\n");
         printf("2-Sorted?\n");
         printf("3-Copy\n");
         printf("4-Copy Unique\n");
         printf("5-Search\n");
         printf("6-Invert\n");
+        printf("7-Join\n");
+        printf("8-Count Elem\n");
+        printf("9-Max and Min times\n");
         printf("0-Exit\n");
 
         printf("Entre a opcao: ");
@@ -113,7 +123,41 @@ int main(){
                 }else
                     printf("Lista invalida!\n");
                 break;
-
+            case 7:
+                printf("Seleciona a primeira lista: (1-3)");
+                scanf("%d", &sel1);
+                if(sel1>0&&sel1<4){
+                    printf("\nSeleciona a segunda lista para juntar: (1-3)");
+                    scanf("%d", &sel2);
+                    if(sel2>0&&sel2<4&&sel1!=sel2){
+                        printf("\nSeleciona a lista armazenar a lista juntada: (1-3)");
+                        scanf("%d", &sel3);
+                        if(sel3>0&&sel3<4&&sel2!=sel3&&sel1!=sel3){
+                            join(&(lst[sel1-1]),&(lst[sel2-1]),&(lst[sel3-1]));
+                        }else
+                            printf("Lista invalida!\n");
+                    }else
+                        printf("Lista invalida!\n");
+                }else
+                    printf("Lista invalida!\n");
+                break;
+            case 8:
+                printf("Seleciona a lista para criar a contagem: (1-3)");
+                scanf("%d", &sel1);
+                if(sel1>0&&sel1<4){
+                    createCount(&(lst[sel1-1]),&C);
+                }else
+                    printf("Lista invalida!\n");
+                break;
+            case 9:
+                printf("Seleciona a lista para achar o max e min: (1-3)");
+                scanf("%d", &sel1);
+                if(sel1>0&&sel1<4){
+                    createCount(&(lst[sel1-1]),&C);
+                    extreme(&C);
+                }else
+                    printf("Lista invalida!\n");
+                break;
             case 0:
                 printf("Saindo do programa!\n");
                 break;
