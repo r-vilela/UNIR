@@ -6,7 +6,7 @@ void create(List *L){
     L->head = NULL;
 };
 
-int add(List *L, int key){
+void add(List *L, int key){
     Elem *v = L->head;
     Elem *new = (Elem *) malloc(sizeof(Elem));
     new->key = key;
@@ -15,6 +15,26 @@ int add(List *L, int key){
 
 };
 
+void addEnd(List *L, int key){
+    Elem *v = L->head;
+    Elem *o = v;
+
+    Elem *new = (Elem *) malloc(sizeof(Elem));
+    new->key = key;
+
+    if(v==NULL)
+        L->head = new;
+
+    else{
+        for( ;v!=NULL;o=v,v=v->next);
+
+        o->next = new;
+    }
+
+}
+
+void addSort(List *L, int sort, int key){
+}
 
 void show(List *L){
     Elem *v = L->head;
@@ -27,7 +47,101 @@ void show(List *L){
     }
 };
 
+int size(List *L){
+    Elem *v = L->head;
+    int c=0;
+
+    if(v!=NULL){
+        for( ;v!=NULL;v = v->next,c++);
+    }
+    return c;
+
+}
+
 int cp(List *L1, List *L2){
+    Elem *v = L1->head;
+    destroy(L2);
+
+    if(v!=NULL){
+        for( ;v!=NULL;v = v->next){
+            addEnd(L2,v->key);
+        }
+        return 1;
+    }
+
+    printf("List 1 is empty!\n");
+    return 0;
+};
+
+int isList(List *L1, int key){
+    Elem *v = L1->head;
+
+    for( ;v!=NULL;v = v->next)
+        if(v->key==key)
+            return 1;
+    return 0;
+
+}
+
+int isSort(List *L1){
+    Elem *v = L1->head;
+    Elem *n = v->next;
+    int resp=0;
+
+    if(size(L1)<=1)
+        return resp;
+
+    if((v->key)>=(n->key)){
+        resp=-1;
+        for( ;n!=NULL; ){
+            if((v->key)>=(n->key)){
+                v=v->next;
+                n=v->next;
+            }else{
+                resp=0;
+                break;
+            }
+        }
+    }
+    if(resp!=0)
+        return resp;
+
+    v = L1->head;
+    n = v->next;
+    if((v->key)<=(n->key)){
+        resp=1;
+        for( ;n!=NULL; ){
+            if((v->key)<=(n->key)){
+                v=v->next;
+                n=v->next;
+            }else{
+                resp=0;
+                break;
+            }
+        }
+    }
+
+    return resp;
+
+}
+
+int cpUnique(List *L1, List *L2){
+    Elem *v = L1->head;
+    destroy(L2);
+
+    if(v!=NULL){
+        for( ;v!=NULL;v = v->next){
+            if(!isList(L2,v->key))
+                addEnd(L2,v->key);
+        }
+        return 1;
+    }
+
+    printf("List 1 is empty!\n");
+    return 0;
+}
+
+int invert(List *L1, List *L2){
     Elem *v = L1->head;
     destroy(L2);
 
@@ -40,14 +154,11 @@ int cp(List *L1, List *L2){
 
     printf("List 1 is empty!\n");
     return 0;
-};
-
-int cpUnique(List *L1, List *L2);
-
-int invert(List *L1, List *L2);
+}
 
 void destroy(List *L){
     Elem *v = L->head, *p;
     for( ;v!=NULL;p = v, v = v->next, free(p));
+    L->head = NULL;
 }
 

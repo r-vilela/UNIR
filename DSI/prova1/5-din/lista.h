@@ -12,11 +12,21 @@ typedef struct{
 
 void create(List *L);
 
-int add(List *L, int key);
+void add(List *L, int key);
+
+void addEnd(List *L, int key);
+
+void addSort(List *L, int sort, int key);
 
 void show(List *L);
 
+int size(List *L);
+
 int cp(List *L1, List *L2);
+
+int isList(List *L1, int key);
+
+int isSort(List *L1);
 
 int cpUnique(List *L1, List *L2);
 

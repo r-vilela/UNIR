@@ -17,7 +17,11 @@ int main(){
             show(&(lists[l]));
         }
         printf("\n1-Add\n");
-        printf("2-Copy\n");
+        printf("2-Add end\n");
+        printf("3-Copy\n");
+        printf("4-Copy unique\n");
+        printf("5-Invert\n");
+        printf("6-Is Sorted?\n");
 
         printf("\nEnter an option: ");
         scanf("%d", &opc);
@@ -33,11 +37,43 @@ int main(){
                 add(&(lists[list1-1]), value);
                 break;
             case 2:
+                printf("Enter a value: ");
+                scanf("%d", &value);
+                printf("Select a list: ");
+                scanf("%d", &list1);
+                addEnd(&(lists[list1-1]), value);
+                break;
+            case 3:
                 printf("Select a list to copy from: ");
                 scanf("%d", &list1);
                 printf("Select a list to copy to: ");
                 scanf("%d", &list2);
                 cp(&(lists[list1-1]), &(lists[list2-1]));
+                break;
+            case 4:
+                printf("Select a list to copy from: ");
+                scanf("%d", &list1);
+                printf("Select a list to copy to: ");
+                scanf("%d", &list2);
+                cpUnique(&(lists[list1-1]), &(lists[list2-1]));
+                break;
+            case 5:
+                printf("Select a list to invert from: ");
+                scanf("%d", &list1);
+                printf("Select a list to invert to: ");
+                scanf("%d", &list2);
+                invert(&(lists[list1-1]), &(lists[list2-1]));
+                break;
+            case 6:
+                printf("Select a list to invert from: ");
+                scanf("%d", &list1);
+                int sort = isSort(&(lists[list1-1]));
+                if(sort==1)
+                    printf("Increasingly Ordered!\n");
+                else if(sort==-1)
+                    printf("Decreasingly Ordered!\n");
+                else
+                    printf("Not ordered!\n");
                 break;
             case 0:
                 printf("Shuting down!\n");
