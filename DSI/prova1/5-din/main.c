@@ -20,15 +20,16 @@ int main(){
         printf("2-Add end\n");
         printf("3-Copy\n");
         printf("4-Copy unique\n");
-        printf("5-Invert\n");
-        printf("6-Is Sorted?\n");
+        printf("5-Join Sorted\n");
+        printf("7-Invert\n");
+        printf("8-Is Sorted?\n");
 
         printf("\nEnter an option: ");
         scanf("%d", &opc);
 
         system("clear");
 
-        switch (opc) {
+        switch (opc){
             case 1:
                 printf("Enter a value: ");
                 scanf("%d", &value);
@@ -58,13 +59,22 @@ int main(){
                 cpUnique(&(lists[list1-1]), &(lists[list2-1]));
                 break;
             case 5:
+                printf("Select a list to copy from: ");
+                scanf("%d", &list1);
+                printf("Select a list to copy to: ");
+                scanf("%d", &list2);
+                printf("Select a list to copy to: ");
+                scanf("%d", &list3);
+                joinSort(&(lists[list1-1]), &(lists[list2-1]), &(lists[list3-1]));
+                break;
+            case 7:
                 printf("Select a list to invert from: ");
                 scanf("%d", &list1);
                 printf("Select a list to invert to: ");
                 scanf("%d", &list2);
                 invert(&(lists[list1-1]), &(lists[list2-1]));
                 break;
-            case 6:
+            case 8:
                 printf("Select a list to invert from: ");
                 scanf("%d", &list1);
                 int sort = isSort(&(lists[list1-1]));

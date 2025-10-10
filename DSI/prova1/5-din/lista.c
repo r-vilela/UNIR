@@ -141,6 +141,65 @@ int cpUnique(List *L1, List *L2){
     return 0;
 }
 
+int joinSort(List *L1, List *L2, List *L3){
+    destroy(L3);
+
+    int sort = isSort(L1);
+    Elem *v1=L1->head, *v2=L2->head;
+
+    if(sort!=0)
+        if(sort==isSort(L2)){
+            if(sort==1){
+                while(v1!=NULL && v2!=NULL){
+                    if(v1->key>v2->key){
+                        addEnd(L3,v2->key);
+                        v2=v2->next;
+                    }else{
+                        addEnd(L3,v1->key);
+                        v1=v1->next;
+                    }
+                }
+                if(v1==NULL){
+                    while(v2!=NULL){
+                        addEnd(L3,v2->key);
+                        v2=v2->next;
+                    }
+                }else{
+                    while(v1!=NULL){
+                        addEnd(L3,v1->key);
+                        v1=v1->next;
+                    }
+                }
+            }else{
+                while(v1!=NULL || v2!=NULL){
+                    if(v1->key<v2->key){
+                        addEnd(L3,v2->key);
+                        v2=v2->next;
+                    }else{
+                        addEnd(L3,v1->key);
+                        v1=v1->next;
+                    }
+                }
+                if(v1==NULL){
+                    while(v2!=NULL){
+                        addEnd(L3,v2->key);
+                        v2=v2->next;
+                    }
+                }else{
+                    while(v1!=NULL){
+                        addEnd(L3,v1->key);
+                        v1=v1->next;
+                    }
+                }
+            }
+
+        }else
+            printf("Are not sorted!\n");
+    else
+        printf("Are not sorted!\n");
+
+}
+
 int invert(List *L1, List *L2){
     Elem *v = L1->head;
     destroy(L2);

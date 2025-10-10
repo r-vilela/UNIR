@@ -30,6 +30,8 @@ int isSort(List *L1);
 
 int cpUnique(List *L1, List *L2);
 
+int joinSort(List *L1, List *L2, List *L3);
+
 int invert(List *L1, List *L2);
 
 void destroy(List *L);
