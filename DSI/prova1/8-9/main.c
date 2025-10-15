@@ -31,8 +31,10 @@ void show(List *L){
     Node *n;
     int i;
 
+    printf("\t");
     for(n=L->head,i=1;n!=NULL;i++,n=n->next)
-        printf("\t%d - %d\n",i, n->info);
+        printf("%d ",n->info);
+    printf("\n");
 };
 
 void destroy(List *L){
@@ -47,17 +49,50 @@ void invert(List *L){
     (L->head)->next = p;
 }
 
+void par_impar(List *L, List *par, List *impar){
+    Node *p, *i;
+
+    for( ;L->head!=NULL;L->head=(L->head)->next){
+        if((L->head)->info%2){
+            if(impar->head==NULL){
+                impar->head = L->head;
+            }else{
+                i->next = L->head;
+            }
+            i = L->head;
+        }else{
+            if(par->head==NULL){
+                par->head = L->head;
+            }else{
+                p->next = L->head;
+            }
+            p = L->head;
+        }
+    }
+    p->next = NULL;
+    i->next = NULL;
+}
+
 int main(){
-    List L;
+    List L, par, impar;
     create(&L);
+    create(&par);
+    create(&impar);
     int opc, v;
 
     do{
         printf("List: \n");
         show(&L);
+        if(par.head !=NULL){
+            printf("Par\n");
+            show(&par);
+            printf("Impar\n");
+            show(&impar);
+        }
         printf("\n--------------\n");
         printf("1-Insert\n");
         printf("2-Invert\n");
+        printf("3-Separate\n");
         printf("\nEnter an option: ");
         scanf("%d", &opc);
         system("clear");
@@ -73,6 +108,10 @@ int main(){
                 invert(&L);
                 break;
 
+            case 3:
+                par_impar(&L, &par, &impar);
+                break;
+
             case 0:
                 printf("Shutting down!\n");
             default:
@@ -81,5 +120,7 @@ int main(){
     }while(opc!=0);
 
     destroy(&L);
+    destroy(&par);
+    destroy(&impar);
     return 1;
 }
