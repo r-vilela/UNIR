@@ -17,6 +17,7 @@ int main(){
         printf("3-Is full?\n");
         printf("4-First\n");
         printf("5-Delete first\n");
+        printf("6-Size\n");
 
         printf("\nEnter option: ");
         scanf("%d", &opt);
@@ -57,6 +58,15 @@ int main(){
             case 5:
                 if(delete(&F)==0)
                     printf("The queue is Empty!\n\n");
+                break;
+
+            case 6:
+                v = size(&F);
+
+                if(v==0)
+                    printf("The queue is Empty!\n\n");
+                else
+                    printf("The queue size is %d\n\n",v);
                 break;
 
             case 0:

@@ -24,6 +24,10 @@ int isEmpty(Fila *F){
     return (F->head==F->tail);
 }
 
+int size(Fila *F){
+    return (((F->tail+n)-F->head)%n);
+}
+
 int first(Fila *F){
     if(isEmpty(F))
         return -1;

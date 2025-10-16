@@ -13,6 +13,8 @@ int isFull(Fila *F);
 
 int isEmpty(Fila *F);
 
+int size(Fila *F);
+
 int first(Fila *F);
 
 int delete(Fila *F);
