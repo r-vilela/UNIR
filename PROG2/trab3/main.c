@@ -27,33 +27,63 @@ void destroy(List *L){
         for(n=L[i].head;n!=NULL;p=n,n=n->prox,free(p));
 }
 
-void show(List *L, int p){
-    Node *n;
-    printf("Tipo: %s\n\t", L[p].tipo);
-    for(n=L[p].head;n!=NULL;n=n->prox)
-        printf("%s ", n->descricao);
-    printf("\n");
+void show(List *L, char p){
+    int i;
+    for(i=0;i<TF&&L[i].tipo[0]!=p;i++);
+    if(i!=TF){
+        Node *n;
+        printf("Tipo: %s\n\t", L[i].tipo);
+        if(L[i].head==NULL)
+            printf("Nao ha produtos na lista!\n");
+        else
+            for(n=L[i].head;n!=NULL;n=n->prox)
+                printf("%s ", n->descricao);
+        printf("\n");
+    }else{
+        printf("Tipo nao existe!\n\n");
+    }
 
 }
 
-int insert(List *L, int p, char *desc){
-    if(p>3)
+int insert(List *L, char p, char *desc){
+    int i;
+    for(i=0;i<TF&&L[i].tipo[0]!=p;i++);
+    if(i==TF)
         return 0;
-    Node *n;
+    Node *n = (Node *) malloc(sizeof(Node));;
     strcpy(n->descricao, desc);
-    n->prox = L[p].head;
-    L[p].head = n;
+    n->prox = L[i].head;
+    L[i].head = n;
+    return 1;
+}
+
+int count(List *L, char p){
+    int i,c;
+    for(i=0;i<TF&&L[i].tipo[0]!=p;i++);
+    if(i!=TF){
+        Node *n;
+        if(L[i].head==NULL)
+            printf("Nao ha produtos na lista!\n");
+        else{
+            for(n=L[i].head,c=0;n!=NULL;n=n->prox, c++);
+            printf("o tipo %s tem %d produtos cadastrados!\n", L[i].tipo, c);
+        }
+        printf("\n");
+    }else{
+        printf("Tipo nao existe!\n\n");
+    }
+
 }
 
 int main(){
-    int opc, tipo;
-    char desc[15];
+    int opc;
+    char desc[15], p;
     List L[TF];
 
     create(L);
 
     do{
-        printf("------------------------\n");
+        printf("-----------------------------------------\n");
         printf("\tSISTEMA DE MERCADO\n");
         printf("\n1-Inserir Produto\n");
         printf("2-Consultar todos os produtos cadastrados de um tipo\n");
@@ -68,20 +98,25 @@ int main(){
         switch (opc) {
             case 1:
                 printf("Digite o tipo que deseja inserir: ");
-                scanf("%d", &tipo);
+                scanf(" %c", &p);
 
                 printf("Digite a descricao: ");
-                scanf(" ^[\n]",desc);
+                scanf(" %[^\n]",desc);
 
-                insert(L, tipo, desc);
+                if(insert(L, p, desc))
+                    printf("Inserido com sucesso!\n\n");
+                else
+                    printf("Erro ao inserir! \nVerifique o tipo selecionado!\n\n");
                 break;
             case 2:
                 printf("Digite o tipo que deseja consultar: ");
-                scanf("%d", &tipo);
-                show(L, tipo);
+                scanf(" %c", &p);
+                show(L, p);
                 break;
             case 3:
-                printf("Contar\n");
+                printf("Digite o tipo voce deseja contar: ");
+                scanf(" %c", &p);
+                count(L, p);
                 break;
             case 0:
                 printf("Saindo . . .\n");
