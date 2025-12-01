@@ -1,15 +1,14 @@
-# link do video https://photos.app.goo.gl/SeiqxNRPdRTJXKmN6
+#Link para o video explicativo https://photos.app.goo.gl/zHrBeHtfv9oksUn36
 import csv
 
 matriz = []
 
 # Ler arquivo
-with open('grafo.csv', newline='', encoding='utf-8') as arquivo:
+with open('isolado.csv', newline='', encoding='utf-8') as arquivo:
     leitor = csv.reader(arquivo)
     for linha in leitor:
         matriz.append(linha)
 
-print(matriz)
 
 #Imprime a matriz
 for i in matriz:
@@ -40,9 +39,9 @@ for i in range(len(matriz)):
             break
 
 if digrafo:
-    print("\nEh um Digarfo\n")
-else:
     print("\nNao eh um Digrafo\n")
+else:
+    print("\nEh um Digarfo\n")
 
 simples = True
 #Grau de cada no e se em simples
@@ -57,7 +56,7 @@ for i in range(len(matriz)):
         #mostrar o grau
         if int(matriz[i][j]) != 0:
             g += 1
-    print(f"No {i} tem grau {g}")
+    print(f"No {i+1} tem grau {g}")
 
 if simples:
     print("\nGrafo eh simples")
@@ -72,3 +71,18 @@ for i in range(len(matriz)):
             isolados = False
     if isolados:
         print(f'O no {i} eh isolado')
+
+completo = True
+#Grafo completo
+for i in range(len(matriz)):
+    nAretas = 0
+    for j in range(len(matriz)):
+        if int(matriz[i][j]) != 0 or int(matriz[j][i]) != 0:
+            nAretas += 1
+    if nAretas < (len(matriz)-1):
+        completo = False
+        break
+if completo:
+    print("\nO Grafo eh completo!")
+else:
+    print("\nO Grafo nao eh completo!")
