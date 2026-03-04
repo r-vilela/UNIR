@@ -22,7 +22,7 @@ Vertice *criarVertice(int idt) {
   return novo;
 }
 
-void insere(Vertice *listaVertice[], int origem, int dest) {
+void insere(Vertice **listaVertice, int origem, int dest) {
   Vertice *novo = criarVertice(dest);
   if (listaVertice[origem] == NULL) {
     listaVertice[origem] = novo;
@@ -54,6 +54,20 @@ void imprime(Vertice *listaVertice[]) {
   }
 }
 
+void destroe(Vertice *listaVertice[]) {
+  for (int i = 0; i < NUMVERT; i++) {
+    Vertice *aux = listaVertice[i];
+    Vertice *old;
+    if (aux != NULL)
+      while (aux->prox != NULL) {
+        old = aux;
+        aux = aux->prox;
+        free(old);
+      }
+    listaVertice[i] = NULL;
+  }
+}
+
 void nosIsolados(Vertice *listaVertice[]) {
   int nos[NUMVERT];
   for (int i = 0; i < NUMVERT; i++)
@@ -73,20 +87,6 @@ void nosIsolados(Vertice *listaVertice[]) {
       printf("No %d eh isolado\n", i + 1);
       continue;
     }
-  }
-}
-
-void destroe(Vertice *listaVertice[]) {
-  for (int i = 0; i < NUMVERT; i++) {
-    Vertice *aux = listaVertice[i];
-    Vertice *old;
-    if (aux != NULL)
-      while (aux->prox != NULL) {
-        old = aux;
-        aux = aux->prox;
-        free(old);
-      }
-    listaVertice[i] = NULL;
   }
 }
 
@@ -138,10 +138,34 @@ void noMaiorGrau(Vertice *listaVertice[]) {
     if (nosSaida[i] > nosSaida[maiorSaida])
       maiorSaida = i;
   }
-  printf("O no com maior numero de saidas foi %d com %d saidas\n", maiorSaida+1,
-         nosSaida[maiorSaida]);
-  printf("O no com maior numero de entradas foi %d com %d entradas\n", maiorEntrada+1,
-          nosEntrada[maiorEntrada]);
+  printf("O no com maior numero de saidas foi %d com %d saidas\n",
+         maiorSaida + 1, nosSaida[maiorSaida]);
+  printf("O no com maior numero de entradas foi %d com %d entradas\n",
+         maiorEntrada + 1, nosEntrada[maiorEntrada]);
+}
+
+void grafoCompleto(Vertice *listaVertice[]) {
+  int completo = 1;
+  for (int i = 0; i < NUMVERT; i++) {
+    Vertice *aux = listaVertice[i];
+
+    while (aux != NULL) {
+      if (i == aux->id) {
+        completo = 0;
+        break;
+      }
+      for (Vertice *idAux = listaVertice[aux->id]; idAux != NULL;
+           idAux = idAux->prox) {
+        if ((idAux->id == i) && (aux->id != idAux->id)) {
+          completo = 0;
+          break;
+        }
+      }
+      aux = aux->prox;
+    }
+    if (!completo)
+      break;
+  }
 }
 
 int main() {
