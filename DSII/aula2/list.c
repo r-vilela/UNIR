@@ -196,13 +196,52 @@ void possuiRalosFontes(Vertice *listaVertice[]) {
       printf("O grafo possui fontes\n");
       break;
     }
+}
 
+void densidade(Vertice *listaVertice[], int direcionado){
+  double totalAresta = 0;
+  int maxAresta = NUMVERT*NUMVERT;
+  for (int i = 0; i < NUMVERT; i++)
+    for( Vertice *aux = listaVertice[i]; aux != NULL; aux = aux->prox)
+      totalAresta++;
+
+  double densidade;
+  int maxCalc = maxAresta*(maxAresta-1);
+
+
+  if(direcionado)
+    densidade = totalAresta/maxCalc;
+  else
+    densidade = (2*totalAresta)/maxCalc;
+
+  printf("A densidade do grafo eh igual a %.3f\n", densidade);
+}
+
+void transposto(Vertice *listaVertice1[], Vertice *listaVertice2[]){
+  int transposto = 1;
+  for (int i = 0; i < NUMVERT; i++){
+    for( Vertice *aux1 = listaVertice1[i]; aux1 != NULL; aux1 = aux1->prox){
+      Vertice *aux2;
+      for( aux2 = listaVertice2[aux1->id]; aux2->prox != NULL && aux2->id != i; aux2 = aux2->prox);
+      if(aux2->id != i){
+        transposto = 0;
+        break;
+      }
+    }
+    if(!transposto)
+      break;
+  }
+  if (transposto)
+    printf("Grafo eh transposto!\n");
+  else
+    printf("Grafo NAO eh transposto!\n");
 }
 
 int main() {
   Vertice *grafo[NUMVERT];
 
   inicializar(grafo);
+
 
   insere(grafo, 0, 2);
   insere(grafo, 0, 1);
@@ -222,6 +261,19 @@ int main() {
   insere(grafo, 4, 3);
   */
 
+  Vertice *grafo2[NUMVERT];
+
+  inicializar(grafo2);
+
+  insere(grafo2, 2, 0);
+  insere(grafo2, 1, 0);
+  insere(grafo2, 2, 1);
+  insere(grafo2, 0, 1);
+  insere(grafo2, 1, 2);
+  insere(grafo2, 0, 2);
+
+  transposto(grafo, grafo2);
+
   imprime(grafo);
 
   nosIsolados(grafo);
@@ -232,6 +284,8 @@ int main() {
   printf("\n");
 
   possuiRalosFontes(grafo);
+
+  densidade(grafo, 0);
 
   destroe(grafo);
 
