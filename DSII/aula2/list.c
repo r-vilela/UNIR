@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define NUMVERT 5
+#define NUMVERT 3
 
 typedef struct vertice {
   int id;
@@ -105,10 +105,10 @@ void nosAlcancaveis(Vertice *listaVertice[]) {
   }
 
   for (int i = 0; i < NUMVERT; i++) {
-    if (nos[i]) {
+    if (nos[i])
       printf("No %d eh alcancavel\n", i + 1);
-      continue;
-    }
+    else
+      printf("No %d nao eh alcancavel\n", i + 1);
   }
 }
 
@@ -147,25 +147,56 @@ void noMaiorGrau(Vertice *listaVertice[]) {
 void grafoCompleto(Vertice *listaVertice[]) {
   int completo = 1;
   for (int i = 0; i < NUMVERT; i++) {
-    Vertice *aux = listaVertice[i];
-
-    while (aux != NULL) {
+    for( Vertice *aux = listaVertice[i]; aux != NULL && completo; aux = aux->prox) {
       if (i == aux->id) {
         completo = 0;
         break;
       }
       for (Vertice *idAux = listaVertice[aux->id]; idAux != NULL;
-           idAux = idAux->prox) {
-        if ((idAux->id == i) && (aux->id != idAux->id)) {
-          completo = 0;
+      idAux = idAux->prox) {
+        if (idAux->id == i) {
+          completo = 1;
           break;
-        }
+        } else
+          completo = 0;
       }
-      aux = aux->prox;
     }
     if (!completo)
       break;
   }
+
+  if(completo)
+    printf("Grafo eh COMPLETO!\n");
+  else
+    printf("Grafo NAO eh COMPLETO!\n");
+}
+
+void possuiRalosFontes(Vertice *listaVertice[]) {
+  int entradas[NUMVERT];
+  int saidas[NUMVERT];
+
+  for(int i=0;i<NUMVERT;i++)
+    entradas[i] = saidas[i] = 0;
+
+  for (int i = 0; i < NUMVERT; i++) {
+    for( Vertice *aux = listaVertice[i]; aux != NULL; aux = aux->prox) {
+      saidas[i]++;
+      entradas[aux->id]++;
+    }
+  }
+
+  for(int i=0;i<NUMVERT;i++)
+    if(entradas[i]==0 && saidas[i]>0){
+      printf("O grafo possui ralos\n");
+      break;
+    }
+
+  for(int i=0;i<NUMVERT;i++)
+    if(entradas[i]>0 && saidas[i]==0){
+      printf("O grafo possui fontes\n");
+      break;
+    }
+
 }
 
 int main() {
@@ -173,12 +204,23 @@ int main() {
 
   inicializar(grafo);
 
+  insere(grafo, 0, 2);
+  insere(grafo, 0, 1);
+  //insere(grafo, 0, 0);
+  insere(grafo, 1, 2);
+  //insere(grafo, 1, 1);
+  insere(grafo, 1, 0);
+  //insere(grafo, 2, 2);
+  insere(grafo, 2, 1);
+  insere(grafo, 2, 0);
+  /*
   insere(grafo, 0, 1);
   insere(grafo, 0, 2);
   insere(grafo, 0, 3);
   // insere(grafo, 1, 0);
   insere(grafo, 3, 4);
   insere(grafo, 4, 3);
+  */
 
   imprime(grafo);
 
@@ -187,6 +229,9 @@ int main() {
   nosAlcancaveis(grafo);
   printf("\n");
   noMaiorGrau(grafo);
+  printf("\n");
+
+  possuiRalosFontes(grafo);
 
   destroe(grafo);
 
