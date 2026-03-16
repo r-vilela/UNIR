@@ -35,8 +35,8 @@ void nosIsolados(int matriz[NUMVERT][NUMVERT]) {
         nos[j] = 0;
       }
   for (int i = 0; i < NUMVERT; i++)
-    if(nos[i])
-        printf("No isolado = %d\n", i+1);
+    if (nos[i])
+      printf("No isolado = %d\n", i + 1);
 }
 
 void nosAlcancaveis(int matriz[NUMVERT][NUMVERT]) {
@@ -50,8 +50,39 @@ void nosAlcancaveis(int matriz[NUMVERT][NUMVERT]) {
         nos[j] = 1;
       }
   for (int i = 0; i < NUMVERT; i++)
-    if(nos[i])
-        printf("No alcancavel = %d\n", i+1);
+    if (nos[i])
+      printf("No alcancavel = %d\n", i + 1);
+    else
+      printf("No %d nao eh alcancavel\n", i + 1);
+}
+
+void completo(int matriz[NUMVERT][NUMVERT]) {
+  int ehCompleto = 1;
+  for (int i = 0; i < NUMVERT; i++) {
+    for (int j = 0; j < NUMVERT; j++) {
+      if ((i == j && matriz[i][j]) ||
+          (i != j && !matriz[i][j] && !matriz[j][i])) {
+        ehCompleto = 0;
+        break;
+      }
+    }
+    if (!ehCompleto)
+      break;
+  }
+  if (ehCompleto)
+    printf("O grafo eh completo\n");
+  else
+    printf("O grafo NAO eh completo\n");
+}
+
+void possuiRalosFontes(int matriz[NUMVERT][NUMVERT]) {
+  int ralos = 0, fontes = 0;
+  for (int i = 0; i < NUMVERT; i++)
+    for (int j = 0; j < NUMVERT; j++) {
+        if(i==j)
+            continue
+        if(
+    }
 }
 
 int main() {
@@ -60,22 +91,47 @@ int main() {
   inicializar(matriz);
 
   inserirArco(matriz, 0, 1);
+  inserirArco(matriz, 0, 2);
+  inserirArco(matriz, 0, 3);
+  inserirArco(matriz, 0, 4);
+
   inserirArco(matriz, 1, 0);
+  inserirArco(matriz, 1, 2);
+  inserirArco(matriz, 1, 3);
+  inserirArco(matriz, 1, 4);
+
+  inserirArco(matriz, 2, 1);
+  inserirArco(matriz, 2, 0);
+  inserirArco(matriz, 2, 3);
+  inserirArco(matriz, 2, 4);
+
+  inserirArco(matriz, 3, 1);
+  inserirArco(matriz, 3, 2);
+  inserirArco(matriz, 3, 0);
+  inserirArco(matriz, 3, 4);
+
+  inserirArco(matriz, 4, 1);
+  inserirArco(matriz, 4, 2);
+  inserirArco(matriz, 4, 3);
+  inserirArco(matriz, 4, 0);
   /*
+  inserirArco(matriz, 1, 0);
   inserirArco(matriz, 1, 3);
   inserirArco(matriz, 2, 1);
   inserirArco(matriz, 4, 1);
   inserirArco(matriz, 4, 3);
-  */
 
   inserirArco(matriz, 4, 3);
   inserirArco(matriz, 3, 4);
+  */
 
   imprimeGrafoList(matriz);
 
-  //nosIsolados(matriz);
+  // nosIsolados(matriz);
 
   nosAlcancaveis(matriz);
+
+  completo(matriz);
 
   return 0;
 }
