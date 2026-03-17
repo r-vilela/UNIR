@@ -100,6 +100,19 @@ void possuiRalosFontes(int matriz[NUMVERT][NUMVERT]) {
       break;
     }
   }
+}
+
+void densidade(int matriz[NUMVERT][NUMVERT]){
+  double E = 0, V = NUMVERT;
+
+  for(int i=0; i<NUMVERT; i++){
+    for(int j=0; j<NUMVERT; j++){
+      if(matriz[i][j])
+        E++;
+    }
+  }
+
+  printf("A densidade eh igual a %.2f!",E/(V*(V-1)));
 
 }
 
@@ -155,6 +168,8 @@ int main() {
   completo(matriz);
 
   possuiRalosFontes(matriz);
+
+  densidade(matriz);
 
   return 0;
 }
