@@ -76,13 +76,31 @@ void completo(int matriz[NUMVERT][NUMVERT]) {
 }
 
 void possuiRalosFontes(int matriz[NUMVERT][NUMVERT]) {
-  int ralos = 0, fontes = 0;
+  int ralos[NUMVERT], fontes[NUMVERT];
+  for(int i=0; i<NUMVERT;i++)
+    ralos[i] = fontes[i] = 0;
+
   for (int i = 0; i < NUMVERT; i++)
     for (int j = 0; j < NUMVERT; j++) {
-        if(i==j)
-            continue
-        if(
+        if(matriz[i][j])
+          fontes[i] = 1;
+        if(matriz[j][i])
+          ralos[i] = 1;
     }
+
+  for(int i=0; i<NUMVERT;i++){
+    if (ralos[i] && !fontes[i]){
+      printf("O Grafo POSSUI fontes!\n");
+      break;
+    }
+  }
+  for(int i=0; i<NUMVERT;i++){
+    if (!ralos[i] && fontes[i]){
+      printf("O Grafo POSSUI ralos!\n");
+      break;
+    }
+  }
+
 }
 
 int main() {
@@ -91,12 +109,12 @@ int main() {
   inicializar(matriz);
 
   inserirArco(matriz, 0, 1);
-  inserirArco(matriz, 0, 2);
+  //inserirArco(matriz, 0, 2);
   inserirArco(matriz, 0, 3);
   inserirArco(matriz, 0, 4);
 
   inserirArco(matriz, 1, 0);
-  inserirArco(matriz, 1, 2);
+  //inserirArco(matriz, 1, 2);
   inserirArco(matriz, 1, 3);
   inserirArco(matriz, 1, 4);
 
@@ -105,15 +123,18 @@ int main() {
   inserirArco(matriz, 2, 3);
   inserirArco(matriz, 2, 4);
 
+  /*
   inserirArco(matriz, 3, 1);
   inserirArco(matriz, 3, 2);
   inserirArco(matriz, 3, 0);
   inserirArco(matriz, 3, 4);
+  */
 
   inserirArco(matriz, 4, 1);
-  inserirArco(matriz, 4, 2);
+  //inserirArco(matriz, 4, 2);
   inserirArco(matriz, 4, 3);
   inserirArco(matriz, 4, 0);
+
   /*
   inserirArco(matriz, 1, 0);
   inserirArco(matriz, 1, 3);
@@ -132,6 +153,8 @@ int main() {
   nosAlcancaveis(matriz);
 
   completo(matriz);
+
+  possuiRalosFontes(matriz);
 
   return 0;
 }
