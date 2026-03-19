@@ -6,7 +6,7 @@
  */
 
 #include <stdio.h>
-#define NUMVERT 5
+#define NUMVERT 4
 
 void inicializar(int matriz[NUMVERT][NUMVERT]){
     for(int i=0; i<NUMVERT; i++)
@@ -18,12 +18,18 @@ void insere(int matriz[NUMVERT][NUMVERT], int org, int dest){
     matriz[org][dest]++;
 }
 
+void insereNaoDirecionao(int matriz[NUMVERT][NUMVERT], int org, int dest){
+    matriz[org][dest]++;
+    matriz[dest][org]++;
+}
+
 void imprime(int matriz[NUMVERT][NUMVERT]){
     for(int i=0; i<NUMVERT; i++){
         printf("\n%d -> \t", i);
         for(int j=0; j<NUMVERT; j++)
                 printf(" %d ", matriz[i][j]);
     }
+    printf("\n");
 }
 
 void copiar(int matriz1[NUMVERT][NUMVERT], int matriz2[NUMVERT][NUMVERT]){
@@ -51,6 +57,24 @@ void warlshall(int matriz[NUMVERT][NUMVERT]){
     imprime(M);
 }
 
+void caminhoEuliriano(int matriz[NUMVERT][NUMVERT]){
+    int impar=0;
+
+    for(int i=0; i<NUMVERT; i++){
+        int total=0;
+        for(int j=0; j<NUMVERT; j++)
+            if(matriz[i][j])
+                total += matriz[i][j];
+        if(total%2)
+            impar++;
+    }
+
+    if(impar>2)
+        printf("Nao ha caminho Euliriano neste grafo\n");
+    else
+        printf("Ha caminho Euliriano neste grafo\n");
+}
+
 int main(){
     printf("AULA 4 - Estrutura de Dados 2\n");
 
@@ -58,14 +82,17 @@ int main(){
 
     inicializar(matriz);
 
-    insere(matriz, 0, 1);
-    insere(matriz, 1, 2);
-    insere(matriz, 2, 3);
-    insere(matriz, 2, 0);
-    insere(matriz, 4, 3);
-    insere(matriz, 4, 0);
+    insereNaoDirecionao(matriz, 0, 1);
+    insereNaoDirecionao(matriz, 0, 3);
+    insereNaoDirecionao(matriz, 1, 0);
+    insereNaoDirecionao(matriz, 1, 2);
+    insereNaoDirecionao(matriz, 1, 3);
+    insereNaoDirecionao(matriz, 2, 1);
+    insereNaoDirecionao(matriz, 2, 3);
 
     imprime(matriz);
 
-    warlshall(matriz);
+    //warlshall(matriz);
+
+    caminhoEuliriano(matriz);
 }
