@@ -112,9 +112,11 @@ void nosAlcancaveis(Vertice *listaVertice[]) {
   }
 }
 
-void noMaiorGrau(Vertice *listaVertice[]) {
+void noMaiorMenorGrau(Vertice *listaVertice[]) {
   int nosEntrada[NUMVERT];
   int nosSaida[NUMVERT];
+  int maiorSaida = 0, maiorEntrada = 0;
+
   for (int i = 0; i < NUMVERT; i++) {
     nosEntrada[i] = 0;
     nosSaida[i] = 0;
@@ -129,8 +131,6 @@ void noMaiorGrau(Vertice *listaVertice[]) {
       aux = aux->prox;
     }
   }
-
-  int maiorSaida = 0, maiorEntrada = 0;
 
   for (int i = 1; i < NUMVERT; i++) {
     if (nosEntrada[i] > nosEntrada[maiorEntrada])
@@ -147,6 +147,11 @@ void noMaiorGrau(Vertice *listaVertice[]) {
 void grafoCompleto(Vertice *listaVertice[]) {
   int completo = 1;
   for (int i = 0; i < NUMVERT; i++) {
+    if(listaVertice[i] == NULL){
+      completo = 0;
+      break;
+    }
+
     for( Vertice *aux = listaVertice[i]; aux != NULL && completo; aux = aux->prox) {
       if (i == aux->id) {
         completo = 0;

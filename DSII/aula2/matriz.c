@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define NUMVERT 5
+#define NUMVERT 3
 
 void inicializar(int matriz[NUMVERT][NUMVERT]) {
   for (int i = 0; i < NUMVERT; i++)
@@ -54,6 +54,37 @@ void nosAlcancaveis(int matriz[NUMVERT][NUMVERT]) {
       printf("No alcancavel = %d\n", i + 1);
     else
       printf("No %d nao eh alcancavel\n", i + 1);
+}
+
+
+void noMaiorGrauSaidaEntrada(int matriz[NUMVERT][NUMVERT]){
+  int entrada[NUMVERT], saida[NUMVERT];
+  int maiorNoSaida=0, maiorNoEntrada=0;
+
+  for(int i=0; i<NUMVERT; i++){
+    entrada[i] = 0;
+    saida[i] = 0;
+  }
+
+  for(int i=0; i < NUMVERT; i++){
+    for(int j=0; j < NUMVERT; j++){
+      if(matriz[i][j]) {
+        entrada[j]++;
+        saida[i]++;
+      }
+    }
+  }
+
+  for(int i=0; i<NUMVERT; i++){
+    if( saida[i]>saida[maiorNoSaida] )
+      maiorNoSaida = i;
+    if( entrada[i]>entrada[maiorNoEntrada] )
+      maiorNoEntrada = i;
+  }
+
+  printf("O no %d tem o maior grau %d de entrada\n", maiorNoEntrada, entrada[maiorNoEntrada]);
+  printf("O no %d tem o maior grau %d de saida\n", maiorNoSaida, saida[maiorNoSaida]);
+
 }
 
 void completo(int matriz[NUMVERT][NUMVERT]) {
@@ -113,63 +144,68 @@ void densidade(int matriz[NUMVERT][NUMVERT]){
   }
 
   printf("A densidade eh igual a %.2f!",E/(V*(V-1)));
+}
 
+void transposto(int matriz1[NUMVERT][NUMVERT],int matriz2[NUMVERT][NUMVERT]){
+  int transposto = 1;
+
+  for(int i=0; i<NUMVERT; i++){
+    for(int j=0; j<NUMVERT; j++){
+      if(matriz1[i][j] != matriz2[j][i]){
+        transposto = 0;
+        break;
+      }
+    }
+    if(!transposto)
+      break;
+  }
+
+  if(transposto)
+    printf("Os grafos sao TRANSPOSTOS");
+  else
+    printf("Os grafos sao NAO TRANSPOSTOS");
 }
 
 int main() {
-  int matriz[NUMVERT][NUMVERT];
+  int matriz1[NUMVERT][NUMVERT];
 
-  inicializar(matriz);
+  inicializar(matriz1);
 
-  inserirArco(matriz, 0, 1);
-  //inserirArco(matriz, 0, 2);
-  inserirArco(matriz, 0, 3);
-  inserirArco(matriz, 0, 4);
+  int matriz2[NUMVERT][NUMVERT];
 
-  inserirArco(matriz, 1, 0);
-  //inserirArco(matriz, 1, 2);
-  inserirArco(matriz, 1, 3);
-  inserirArco(matriz, 1, 4);
+  inicializar(matriz2);
 
-  inserirArco(matriz, 2, 1);
-  inserirArco(matriz, 2, 0);
-  inserirArco(matriz, 2, 3);
-  inserirArco(matriz, 2, 4);
+  inserirArco(matriz1, 0, 2);
+  inserirArco(matriz1, 0, 1);
+  inserirArco(matriz1, 0, 0);
 
-  /*
-  inserirArco(matriz, 3, 1);
-  inserirArco(matriz, 3, 2);
-  inserirArco(matriz, 3, 0);
-  inserirArco(matriz, 3, 4);
-  */
+  inserirArco(matriz1, 1, 2);
+  inserirArco(matriz1, 2, 1);
 
-  inserirArco(matriz, 4, 1);
-  //inserirArco(matriz, 4, 2);
-  inserirArco(matriz, 4, 3);
-  inserirArco(matriz, 4, 0);
+  //inserirArco(matriz2, 2, 1);
+  //inserirArco(matriz2, 1, 1);
 
-  /*
-  inserirArco(matriz, 1, 0);
-  inserirArco(matriz, 1, 3);
-  inserirArco(matriz, 2, 1);
-  inserirArco(matriz, 4, 1);
-  inserirArco(matriz, 4, 3);
+  inserirArco(matriz2, 2, 0);
+  inserirArco(matriz2, 1, 0);
 
-  inserirArco(matriz, 4, 3);
-  inserirArco(matriz, 3, 4);
-  */
+  imprimeGrafoList(matriz1);
+  //imprimeGrafoList(matriz2);
+  
+  //nosIsolados(matriz1);
 
-  imprimeGrafoList(matriz);
+  //nosAlcancaveis(matriz1);
 
-  // nosIsolados(matriz);
+  //completo(matriz1);
 
-  nosAlcancaveis(matriz);
+  //possuiRalosFontes(matriz1);
 
-  completo(matriz);
 
-  possuiRalosFontes(matriz);
+  //densidade(matriz1);
 
-  densidade(matriz);
+  //transposto(matriz1, matriz2);
+  //
+
+  noMaiorGrauSaidaEntrada(matriz1);
 
   return 0;
 }
