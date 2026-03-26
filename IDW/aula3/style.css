@@ -1,0 +1,107 @@
+
+body {
+    margin: 0 16px 0 24px;
+    padding: 0;
+    background-color: #c5e6f6;
+    font-family: "Roboto";
+}
+
+main{
+    min-height: 100vh;
+}
+/*
+ * HEADER
+ */
+.title {
+    font-family: "Roboto Mono", monospace;
+    color: #ee2c94;
+    font-size: 40px;
+    margin: 8px 0;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.header div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+nav ul{
+    list-style-type: none;
+    display: flex;
+    gap: 16px;
+}
+
+.nav-list li{
+    padding: 8px;
+    background-color: #738db4;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+#search-div{
+    display: flex;
+    gap: 6px;
+}
+
+/*
+ * CONTENT
+ */
+.content-holder {
+    background-color: #f6ffff;
+    padding: 4px;
+}
+
+.content-holder h2{
+    margin: 4px 0;
+}
+
+/*
+ * MAIN
+ */
+section{
+    display: flex;
+    gap: 12px;
+}
+
+/*
+ * PROFILE
+ */
+.profile-grid{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.profile{
+    flex: 1;
+    position: relative;
+}
+
+.profile img{
+    width: 100%;
+    height: auto;
+    margin-bottom: 8px;
+    object-fit: cover;
+}
+
+/*
+ * MAIN CONTENT
+ */
+.main-content{
+    flex: 2.5;
+}
+
+/*
+ * SIDE CONTENT
+ */
+.side-content{
+    flex: 1.5;
+}
+
