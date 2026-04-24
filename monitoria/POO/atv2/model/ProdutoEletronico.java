@@ -1,7 +1,5 @@
 package model;
 
-import model.Produto;
-
 public class ProdutoEletronico extends Produto {
   private int mesesGarantia;
 
@@ -18,7 +16,7 @@ public class ProdutoEletronico extends Produto {
 
   @Override
   public String exibirDetalhes() {
-    StringBuilder detalhes = new StringBuilder("===== Produto Eletronico =====\n");
+    StringBuilder detalhes = new StringBuilder("\n====== Produto Eletronico ======");
     detalhes.append("\n\tCodigo: ");
     detalhes.append(this.getCodigo());
     detalhes.append("\n\tNome: ");

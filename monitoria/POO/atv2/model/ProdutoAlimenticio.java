@@ -13,7 +13,7 @@ public class ProdutoAlimenticio extends Produto {
 
   @Override
   public String exibirDetalhes() {
-    StringBuilder detalhes = new StringBuilder("===== Produto Alimenticio ======\n");
+    StringBuilder detalhes = new StringBuilder("\n====== Produto Alimenticio ======");
     detalhes.append("\n\tCodigo: ");
     detalhes.append(this.getCodigo());
     detalhes.append("\n\tNome: ");
