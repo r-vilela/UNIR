@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Plano cartesiano</title>
+
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+
+<body>
+
+    <div id="grafico" style="width: 800px; height: 600px;"></div>
+
+    <script>
+        const pontos = [
+	    {x: 1, y: 1},
+	    {x: -2, y: -1},
+	    {x: 3, y: 2},
+            /*{ x: 2, y: 28.7 },
+            { x: 3, y: 24.8 },
+            { x: 3, y: 26 },
+            { x: 3, y: 30.5 },
+            { x: 3, y: 23.8 },
+            { x: 4, y: 24.6 },
+            { x: 4, y: 23.8 },
+            { x: 5, y: 20.4 },
+            { x: 5, y: 21.6 },
+            { x: 6, y: 22.1 },*/
+        ];
+
+
+        const layout = {
+            title: 'Plano Cartesiano',
+
+            xaxis: {
+                title: 'X',
+                zeroline: true,
+                showgrid: true
+            },
+
+            yaxis: {
+                title: 'Y',
+                zeroline: true,
+                showgrid: true
+            }
+        };
+
+	let x = 0;
+	let y = 0;
+	let xy = 0;
+	let xx = 0;
+	const n = pontos.length
+	
+	pontos.map(p => {
+	    x += p.x
+	    y += p.y
+	    xy += (p.x*p.y)
+	    xx += (p.x*p.x)
+	})
+
+	console.log(x);
+	console.log(y);
+	console.log(xy);
+	console.log(xx);
+	console.log(pontos.length);
+
+	const m = ((n*xy)-(x*y))/((n*xx)-(x*x));
+
+	const b =(y-(m*x))/n;
+
+	const pontinhos = [];
+
+	for (let i = -20; i <= 30; i++) {
+	    const x = i / 10;
+	    const y = x * x;
+
+	    pontinhos.push([x, y]);
+	}
+
+        const data = [{
+            x: pontos.map(p => p.x),
+            y: pontos.map(p => p.y),
+
+            mode: 'markers',
+            type: 'scatter',
+            name: 'Pontinhos',
+
+            marker: {
+                size: 10
+            },
+	},
+	    {
+		x: pontinhos.map(p => p[0]),
+		y: pontinhos.map(p => m*p[0] + b),
+
+		mode: 'markers',
+		type: 'scatter',
+		    name: `y = ${m.toFixed(2)}x + ${b.toFixed(2)}`,
+
+		marker: {
+		    size: 5
+		}
+	    }
+        ];
+
+        Plotly.newPlot('grafico', data, layout);
+    </script>
+
+</body>
+</html>
